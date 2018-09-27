@@ -7,8 +7,84 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <style>
+
+    @import url('https://fonts.googleapis.com/css?family=Roboto:100');
+    body {
+      background: #fff;
+    }
+
+    /** page **/
+    .cssloader {
+      padding-top: calc(45vh - 25px);
+    }
+
+    /** loader **/
+    .sh1 {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 150px 150px 0 0;
+      border-color: #f7a031 transparent transparent transparent;
+      margin: 0 auto;
+      animation: shk1 1s ease-in-out infinite normal;
+    }
+
+    .sh2 {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 0 150px 150px;
+      border-color: transparent  transparent #154A80 transparent ;
+      margin: -150px auto 0;
+      animation: shk2 1s ease-in-out infinite alternate;
+    }
+
+    /** animation starts here **/
+    @keyframes shk1 {
+      0% {
+        transform: rotate(-360deg);
+      }  
+      
+      100% {
+      }
+    }
+
+    @keyframes shk2 {
+      0% {
+        transform: rotate(360deg);
+      }
+      100% {
+      }
+    }
+
+    .lt {
+      color: #154A80;
+      font-family: 'Roboto', sans-serif;
+      margin: 30px auto;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 10px;
+    }
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <div class="cssloader">
+      <div class="sh1"></div>
+      <div class="sh2"></div>
+      <h4 class="lt">Loading...</h4>
+    </div>
+  </app-root>
+
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script>
+    $(window).load(function(){
+    $('.cssloader').fadeOut('slow',function(){$(this).remove();});});
+  </script>
 </body>
 </html>

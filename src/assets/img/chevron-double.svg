@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11.175 10">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #154a80;
+      }
+    </style>
+  </defs>
+  <g id="arrows" transform="translate(-661 -710)">
+    <path id="ic_keyboard_arrow_right_24px" class="cls-1" d="M8.59,14.575l3.817-3.825L8.59,6.925,9.765,5.75l5,5-5,5Z" transform="translate(652.41 704.25)"/>
+    <path id="ic_keyboard_arrow_right_24px-2" data-name="ic_keyboard_arrow_right_24px" class="cls-1" d="M8.59,14.575l3.817-3.825L8.59,6.925,9.765,5.75l5,5-5,5Z" transform="translate(657.41 704.25)"/>
+  </g>
+</svg>

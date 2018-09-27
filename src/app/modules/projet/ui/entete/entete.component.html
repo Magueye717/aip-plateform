@@ -1,0 +1,85 @@
+<div class="entete shadow-bottom-1">
+  <div class="logo text-center bg-blue flex-grow-1">
+      <img src="../../assets/img/logo-aip.svg" class="m-auto" alt="">
+  </div>
+  <div class="menu-search">
+      <div class="container">
+          <div class="row shadow-bottom-1">
+              <div class="col-md-9 col-sm-6 col-6">
+                  <nav class="navbar navbar-expand-lg navbar-light ">
+                      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                          <ul class="navbar-nav">
+                              <li class="nav-item ">
+                                  <a class="nav-link" routerLink="/home" routerLinkActive="active">{{ 'Accueil' | translate}} <span class="sr-only">(current)</span></a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="#" routerLinkActive="active">{{ 'InformationsRevues' | translate}}</a>
+                              </li>
+                              <li class="nav-item dropdown" routerLinkActive="active" >
+                                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      {{ 'Espaces' | translate }}
+                                  </a>
+                                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                      <a class="dropdown-item" routerLink="/espaces/ONG" >{{'EspaceONG' | translate}}</a>
+                                      <a class="dropdown-item" href="#">{{ 'EspacePTF' | translate}}</a>
+                                      <a class="dropdown-item" href="#">Something else here</a>
+                                  </div>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="#" routerLinkActive="active">{{'Projets' | translate}}</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" routerLink="/secteurs" routerLinkActive="active" translate>{{'Secteurs' | translate}}</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link" href="#" routerLinkActive="active">Contact</a>
+                              </li>
+                          </ul>
+                      </div>
+                  </nav>
+              </div>
+              <div class="col-md-3 col-sm-6 col-6">
+                  <ul class="navbar-nav flex-row ml-auto d-md-flex float-right langues-social">
+                      <li class="nav-item dropdown langues">
+                          <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <img src={{langue.drapeau}} alt=""> {{langue.libelle}}
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+                              <a class="dropdown-item" (click)="switchLanguage('fr')">Fr</a>
+                              <a class="dropdown-item" (click)="switchLanguage('en')">En</a>
+                          </div>
+                      </li>
+                      <li class="nav-item social">
+                          <a class="nav-link p-2" href="#"><img src="../../assets/img/facebook-f.svg" alt=""></a>
+                      </li>
+                      <li class="nav-item social">
+                          <a class="nav-link p-2" href="#"><img src="../../assets/img/twitter-f.svg" alt=""></a>
+                      </li>
+                      <li class="nav-item social">
+                          <a class="nav-link p-2" href="#"><img src="../../assets/img/google-plus-f.svg" alt=""></a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-9 col-sm-7">
+                  <nav class="navbar navbar-light justify-content-start">
+                      <form class="search">
+                          <div class="search__wrapper">
+                              <input type="text" name="" [placeholder]="'RechercherProjet' | translate" class="search__field">
+                              <button type="submit" class="fa fa-search search__icon"><img src="../../assets/img/ic_search.svg" alt=""></button>
+                          </div>
+                      </form>
+                      <a href="#" class="small-2 font-weight-bold color-blue text-left ml-4">{{ 'Rechercheavancee' | translate}}</a>
+                  </nav>
+              </div>
+              <div class="col-md-3 col-sm-5">
+                  <a href="#" class="btn btn-primary btn-sm float-right mt-3 mb-2" role="button"><img src="../../assets/img/ic_lock.svg" alt=""> {{ 'Creercompte' | translate}}</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

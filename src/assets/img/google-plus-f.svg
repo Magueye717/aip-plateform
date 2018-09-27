@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.2 12">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #575757;
+      }
+    </style>
+  </defs>
+  <g id="google-plus" transform="translate(0 -96)">
+    <g id="Groupe_4" data-name="Groupe 4" transform="translate(13.2 98.4)">
+      <g id="Groupe_3" data-name="Groupe 3">
+        <path id="Tracé_2" data-name="Tracé 2" class="cls-1" d="M355.6,162.4V160h-1.2v2.4H352v1.2h2.4V166h1.2v-2.4H358v-1.2Z" transform="translate(-352 -160)"/>
+      </g>
+    </g>
+    <g id="Groupe_6" data-name="Groupe 6" transform="translate(0 96)">
+      <g id="Groupe_5" data-name="Groupe 5" transform="translate(0 0)">
+        <path id="Tracé_3" data-name="Tracé 3" class="cls-1" d="M6,100.8v2.4H9.395A3.6,3.6,0,1,1,6,98.4a3.547,3.547,0,0,1,2.332.869l1.577-1.81A5.946,5.946,0,0,0,6,96a6,6,0,1,0,6,6v-1.2Z" transform="translate(0 -96)"/>
+      </g>
+    </g>
+  </g>
+</svg>

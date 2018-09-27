@@ -1,0 +1,80 @@
+
+/****Partie Responsice.css****/
+@media (min-width: 1220px) {
+
+}
+
+@media (min-width: 980px) {
+
+}
+
+@media (max-width: 800px) {
+
+    .logo img {
+        max-height: 60px;
+    }
+    .logo {
+        padding: 15px;
+        max-width: 140px;
+    }
+    .menu-search {
+        width: calc(100% - 140px);
+        background: #ffffff;
+        height: auto;
+    }
+    .menu-search .container {
+        max-width: initial;
+    }
+    .search__wrapper {
+        position: relative;
+        width: 180px;
+    }
+    .search__field {
+        font-size: 15px;
+        padding: 0.35em 10px 0.35em 0;
+    }
+    .justify-content-start {
+        -ms-flex-pack: start!important;
+        justify-content: flex-start!important;
+    }
+    .navbar {padding: .5rem 0;}
+}
+
+@media (max-width: 650px) {
+    .entete {
+        display: initial;
+    }
+    .logo img {
+        max-height: 55px;
+    }
+    .logo {
+        padding: 15px;
+        max-width: 100%;
+    }
+    .menu-search {
+        width: 100%;
+        background: #ffffff;
+        height: auto;
+        box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08);
+        -webkit-box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08);
+        -moz-box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08);
+        z-index: 9;
+        position: relative;
+    }
+    .menu-search .container {
+        max-width: initial;
+    }
+}
+@media (max-width: 480px) {
+    .projet-contacts .media .titre2 {
+        font-size: 16px;
+    }
+    .projet-contacts .media> img {
+        max-width: 110px;
+    }
+    .projet-contacts .media p.small-1 {
+        font-size: 12px;
+    }
+}
+
+

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54.946 36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #73af00;
+      }
+
+      .cls-2 {
+        fill: #ffe15a;
+      }
+
+      .cls-3 {
+        fill: #ff4b55;
+      }
+    </style>
+  </defs>
+  <g id="_227-senegal" data-name="227-senegal" transform="translate(0 -88.272)">
+    <path id="Tracé_513" data-name="Tracé 513" class="cls-1" d="M18.315,124.271H.947A.947.947,0,0,1,0,123.324v-34.1a.947.947,0,0,1,.947-.947H18.315Z" transform="translate(0 0)"/>
+    <rect id="Rectangle_5000" data-name="Rectangle 5000" class="cls-2" width="18.316" height="35.999" transform="translate(18.316 88.273)"/>
+    <path id="Tracé_514" data-name="Tracé 514" class="cls-3" d="M358.7,124.272H341.333v-36H358.7a.947.947,0,0,1,.947.947v34.1A.947.947,0,0,1,358.7,124.272Z" transform="translate(-304.702 -0.001)"/>
+    <path id="Tracé_515" data-name="Tracé 515" class="cls-1" d="M209.056,204.464l1.255,3.763,3.966.031a.231.231,0,0,1,.135.416l-3.191,2.356,1.2,3.782a.231.231,0,0,1-.354.257l-3.227-2.307-3.227,2.306a.231.231,0,0,1-.354-.257l1.2-3.782-3.191-2.356a.231.231,0,0,1,.135-.417l3.966-.031,1.255-3.763A.231.231,0,0,1,209.056,204.464Z" transform="translate(-181.364 -103.582)"/>
+  </g>
+</svg>

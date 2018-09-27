@@ -23,6 +23,8 @@
               "src/assets"
             ],
             "styles": [
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -123,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "AIPPlatform"
+  "defaultProject": "AIPPlatform",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
