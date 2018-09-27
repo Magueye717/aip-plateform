@@ -21,6 +21,6 @@ export const reducers: ActionReducerMap<State> = {
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
 
-export const getProjetsState = createFeatureSelector<fromProjets.State>('Projets');
+export const getProjetsState = createFeatureSelector<fromProjets.State>('projets');
 export const getProjets = createSelector(getProjetsState, state => state.data);
 export const getIsLoading = createSelector(getProjetsState, state => state.loading);

@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Projet, ProjetResponse } from '../../../models/projet';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Projet } from '../../../models/projet';
 
 export enum ProjetsActionTypes {
   LoadProjets = '[Projets] Load Projets',
@@ -15,7 +15,7 @@ export class LoadProjets implements Action {
 export class LoadProjetsSuccess implements Action {
   readonly type = ProjetsActionTypes.LoadProjetsSuccess;
 
-  constructor(public payload: ProjetResponse) {}
+  constructor(public payload: Projet[]) {}
 }
 
 export class LoadProjetsError implements Action {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,  } from 'rxjs';
 import { Projet } from '../../../models/projet';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/modules/projet/config/projets.reducer';
@@ -14,17 +14,19 @@ import { LoadProjets } from '../config/projets.actions';
 export class ListeProjetComponent implements OnInit {
    projets$: Observable<Projet[]>;
    isLoading$: Observable<boolean>;
+   allProjets: Projet[] = [];
 
   constructor(
     private store: Store<State>
   ) {
     this.projets$ = this.store.select(getProjets);
-    this.isLoading$ = this.store.select(getIsLoading);
+    this.projets$.subscribe((projet) => {
+      this.allProjets = projet;
+      console.log(this.allProjets);
+    });
    }
 
   ngOnInit() {
-    this.store.dispatch(new LoadProjets);
-    console.log(this.isLoading$);
   }
 
 }

@@ -14,8 +14,3 @@ export interface Projet {
     categorieEnv: string;
     objectifGeneral: string;
 }
-
-export interface ProjetResponse {
-    results: Projet[];
-    count: number;
-}

@@ -1,11 +1,10 @@
-import { Action } from '@ngrx/store';
 import { ProjetsActions, ProjetsActionTypes } from './projets.actions';
 import { Projet } from '../../../models/projet';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export interface State {
   loading: boolean;
-  data: Projet[];
+  data: Projet[] | null;
   error: HttpErrorResponse | null;
 }
 
@@ -29,7 +28,7 @@ export function reducer(state = initialState, action: ProjetsActions): State {
       return {
         ...state,
         loading: false,
-        data: action.payload.results
+        data: action.payload
       };
 
     case ProjetsActionTypes.LoadProjetsError:
@@ -43,3 +42,4 @@ export function reducer(state = initialState, action: ProjetsActions): State {
       return state;
   }
 }
+
