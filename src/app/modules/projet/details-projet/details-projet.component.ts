@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CountryService } from '../../../services/country.service';
+import { GetProjet } from '../config/projets.actions';
+import { Store } from '@ngrx/store';
+import { State } from '../config/projets.reducer';
+import { Projet } from '../../../models/projet';
+import { getProjet } from '../../../config/reducers';
+
 
 @Component({
   selector: 'app-details-projet',
@@ -10,30 +15,71 @@ import { CountryService } from '../../../services/country.service';
 export class DetailsProjetComponent implements OnInit {
   idProjet: number;
   projet = {
-    idProjet: 0,
-    titre: 'Projet d’approvisionnement en eau et d’assainissement en milieu rural au Sénégal ',
-    objectifGeneral: 'The development objective of Rural Water Supply and Sanitation Project for Senegal is to increase access '
-                     + 'to improved water and sanitation services in selected rural areas and strengthen capacity for water resources '
-                     + 'management. This project has four components. 1) The first component, Rural Water Supply, aims to improve water '
-                     + 'services and expand access through the following sub-components: (i) Upgrading of piped water systems to increase '
-                     + 'water availability and quality, in selected areas; and (ii) Development of access to water in selected areas.',
     secteur: 'Agriculture et développement rural',
     pays: {
       libelle: 'senegal',
       code: 'sn'
     }
   };
+
+  projetSelected: Projet = {
+    idProjet: 0,
+    numProjet: '',
+    contrePartieEtat: 0,
+    dateApprobation: null,
+    dateCloturePrev: null,
+    dateClotureEff: null,
+    budjetProjet: 0,
+    nomProjet: '',
+    statut: '',
+    acteurFinance: '',
+    descriptionProjet: '',
+    coordonnateurProjet: '',
+    categorieEnv: '',
+    objectifGeneral: '',
+  };
+
   drapeau: any;
   isImageLoading = false;
 
-  constructor(private route: ActivatedRoute, private countryService: CountryService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<State>
+  ) {
+    this.route.params.subscribe(params => {
+      this.store.dispatch(new GetProjet(+params['id']));
+    });
+
+    this.store.select(getProjet).subscribe((projet) => {
+      if (projet !== null) {
+        this.initialize();
+        this.projetSelected = projet;
+        console.log(this.projetSelected);
+      }
+    });
+  }
 
   ngOnInit() {
     this.drapeau = '../../assets/img/flags/' + this.projet.pays.code + '.svg';
+  }
 
-    this.route.params.subscribe(params => {
-      this.projet.idProjet = params['idProjet']; // (+) converts string 'id' to a number
-   });
+  initialize() {
+    this.projetSelected = {
+      idProjet: 0,
+      numProjet: '',
+      contrePartieEtat: 0,
+      dateApprobation: null,
+      dateCloturePrev: null,
+      dateClotureEff: null,
+      budjetProjet: 0,
+      nomProjet: '',
+      statut: '',
+      acteurFinance: '',
+      descriptionProjet: '',
+      coordonnateurProjet: '',
+      categorieEnv: '',
+      objectifGeneral: '',
+    }
   }
 
 }

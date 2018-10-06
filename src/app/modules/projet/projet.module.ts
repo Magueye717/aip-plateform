@@ -12,6 +12,7 @@ import { FooterComponent } from './ui/footer/footer.component';
 import { EnteteComponent } from './ui/entete/entete.component';
 import { EffectsModule } from '@ngrx/effects';
 import { ProjetsEffects } from './config/projets.effects';
+import { CreateProjetComponent } from './create-projet/create-projet.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -37,6 +38,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProjetComponent,
     FooterComponent,
     EnteteComponent,
-  ]
+    CreateProjetComponent,
+  ],
 })
 export class ProjetModule { }

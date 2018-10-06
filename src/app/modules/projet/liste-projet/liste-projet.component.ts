@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable,  } from 'rxjs';
 import { Projet } from '../../../models/projet';
 import { Store } from '@ngrx/store';
-import { State } from 'src/app/modules/projet/config/projets.reducer';
-import { getProjets, getIsLoading } from '../../../config/reducers';
-import { LoadProjets } from '../config/projets.actions';
+import { State } from '../config/projets.reducer';
+import { getAllProjets } from '../../../config/reducers';
 
 @Component({
   selector: 'app-liste-projet',
@@ -12,21 +11,21 @@ import { LoadProjets } from '../config/projets.actions';
   styleUrls: ['./liste-projet.component.css']
 })
 export class ListeProjetComponent implements OnInit {
-   projets$: Observable<Projet[]>;
-   isLoading$: Observable<boolean>;
-   allProjets: Projet[] = [];
+
+  projets: Projet[];
 
   constructor(
     private store: Store<State>
   ) {
-    this.projets$ = this.store.select(getProjets);
-    this.projets$.subscribe((projet) => {
-      this.allProjets = projet;
-      console.log(this.allProjets);
+    this.store.select(getAllProjets).subscribe((projets) => {
+      this.projets = projets;
+      console.log(this.projets);
     });
+
    }
 
   ngOnInit() {
+
   }
 
 }

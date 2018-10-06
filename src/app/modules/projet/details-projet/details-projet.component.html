@@ -5,7 +5,7 @@
         <div class="col pl-0">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#" routerLink="/home">{{ 'Accueil' | translate}}</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{ 'Accueil' | translate}}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{'Projets' | translate}}</li>
                 </ol>
             </nav>
@@ -14,11 +14,15 @@
 <div class="row">
   <div class="col-md-6">
       <h1 class="projet-title">
-          {{projet.titre}}
+          {{projetSelected.nomProjet}}
       </h1>
-      <p class="resume mb-5">
-        {{projet.objectifGeneral}}
-      </p>
+    <div *ngIf="projetSelected.objectifGeneral !== '';then objectifGeneralSuccess else objectifGeneralNull"></div>
+    <ng-template #objectifGeneralSuccess>
+        <p class="resume mb-5">{{projetSelected.objectifGeneral}}</p>
+    </ng-template>
+    <ng-template #objectifGeneralNull>
+        <p class="resume mb-5">Description du projet non renseigné</p>
+    </ng-template>
       <div class="row">
           <div class="col-md-6">
               <div class="liste-caracteristiques mb-4">
@@ -34,20 +38,54 @@
                       </li>
                       <li>
                           <span>{{ 'Etat' | translate}} :</span>
-                          <p class="mb-0">En cours</p>
+                          <div *ngIf="projetSelected.statut !== null;then statutSuccess else statutNull"></div>
+                          <ng-template #statutSuccess>
+                            <p class="mb-0"> {{projetSelected.statut}} </p>
+                          </ng-template>
+                          <ng-template #statutNull>
+                            <p class="mb-0">Non renseigné</p>
+                          </ng-template>
                       </li>
                       <li>
                           <span>Date d’approbation :</span>
-                          <p class="mb-0">22 juin 2018</p>
+                          <div *ngIf="projetSelected.dateApprobation !== null;then dateApprobationSuccess else dateApprobationNull"></div>
+                          <ng-template #dateApprobationSuccess>
+                            <p class="mb-0"> {{projetSelected.dateApprobation | date : 'dd/MM/yyyy'}} </p>
+                          </ng-template>
+                          <ng-template #dateApprobationNull>
+                            <p class="mb-0">Non renseigné</p>
+                          </ng-template>
                       </li>
                       <li>
                           <span>Date de cloture :</span>
-                          <p class="mb-0">30 juin 2023</p>
+                          <div *ngIf="projetSelected.dateClotureEff !== null;then dateClotureEffSuccess else dateClotureEffNull"></div>
+                          <ng-template #dateClotureEffSuccess>
+                            <p class="mb-0"> {{projetSelected.dateClotureEff | date : 'dd/MM/yyyy'}} </p>
+                          </ng-template>
+                          <ng-template #dateClotureEffNull>
+                            <p class="mb-0">Non renseigné</p>
+                          </ng-template>
                       </li>
                       <li>
                           <span>Coût total du projet :</span>
-                          <p class="mb-0">USD 930.00  millions</p>
+                          <div *ngIf="projetSelected.budjetProjet !== null;then budgetProjetSuccess else budgetProjetNull"></div>
+                          <ng-template #budgetProjetSuccess>
+                            <p>{{projetSelected.budjetProjet | currency:'USD':'symbol'}} </p>
+                          </ng-template>
+                          <ng-template #budgetProjetNull>
+                            <p class="mb-0">Non renseigné</p>
+                          </ng-template>
                       </li>
+                      <li>
+                            <span>Coordonnateur du projet :</span>
+                            <div *ngIf="projetSelected.coordonnateurProjet !== null;then coordonnateurProjetSuccess else coordonnateurProjetNull"></div>
+                            <ng-template #coordonnateurProjetSuccess>
+                              <p>{{projetSelected.coordonnateurProjet}} </p>
+                            </ng-template>
+                            <ng-template #coordonnateurProjetNull>
+                              <p class="mb-0">Non renseigné</p>
+                            </ng-template>
+                        </li>
                   </ul>
               </div>
           </div>
@@ -213,8 +251,13 @@
               <label for="tab4">Contacts</label>
               <div class="tab-content">
                   <h3>Description</h3>
-                  <p>Novitates autem si spem adferunt, ut tamquam in herbis non fallacibus fructus appareat, non sunt illae quidem repudiandae, vetustas tamen suo loco conservanda; maxima est enim vis vetustatis et consuetudinis. Quin in ipso equo, cuius modo feci mentionem, si nulla res impediat, nemo est, quin eo, quo consuevit, libentius utatur quam intractato et novo. Nec vero in hoc quod est animal, sed in iis etiam quae sunt inanima, consuetudo valet, cum locis ipsis delectemur, montuosis etiam et silvestribus, in quibus diutius commorati sumus.
-                      Apud has gentes, quarum exordiens initium ab Assyriis ad Nili cataractas porrigitur et confinia Blemmyarum, omnes pari sorte sunt bellatores seminudi coloratis sagulis pube tenus amicti, equorum adiumento pernicium graciliumque camelorum per diversa se raptantes, in tranquillis vel turbidis rebus: nec eorum quisquam aliquando stivam adprehendit vel arborem colit aut arva subigendo quaeritat victum, sed errant semper per spatia longe lateque distenta sine lare sine sedibus fixis aut legibus: nec idem perferunt diutius caelum aut tractus unius soli illis umquam placet.</p>
+                  <div *ngIf="projetSelected.objectifGeneral !== null;then objectifGeneralSuccess else objectifGeneralNull"></div>
+                <ng-template #objectifGeneralSuccess>
+                    <p>{{projetSelected.objectifGeneral}}</p>
+                </ng-template>
+                <ng-template #objectifGeneralNull>
+                    <p class="text-center">Description du projet non renseigné</p>
+                </ng-template>
                   <h3>Objectifs</h3>
                   <p>Cuius acerbitati uxor grave accesserat incentivum, germanitate Augusti turgida supra modum, quam Hannibaliano regi fratris filio antehac Constantinus iunxerat pater, Megaera quaedam mortalis, inflammatrix saevientis adsidua, humani cruoris avida nihil mitius quam maritus; qui paulatim eruditiores facti processu temporis ad nocendum per clandestinos versutosque rumigerulos conpertis leviter addere quaedam male suetos falsa et placentia sibi discentes, adfectati regni vel artium nefandarum calumnias insontibus adfligebant.</p>
               </div>
