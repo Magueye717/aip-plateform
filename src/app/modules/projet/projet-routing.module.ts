@@ -15,7 +15,7 @@ const projetRoutes: Routes = [
         component: ListeProjetComponent
       },
       {
-        path: 'detail/:id',
+        path: ':id',
         component: DetailsProjetComponent
       },
       {

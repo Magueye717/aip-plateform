@@ -1,5 +1,3 @@
-
-/****Partie Responsice.css****/
 @media (min-width: 1220px) {
 
 }
@@ -37,7 +35,7 @@
         -ms-flex-pack: start!important;
         justify-content: flex-start!important;
     }
-    .navbar {padding: .5rem 0;}
+    .navbar {padding: .5rem 0; background: #fff;}
 }
 
 @media (max-width: 650px) {
@@ -76,5 +74,3 @@
         font-size: 12px;
     }
 }
-
-

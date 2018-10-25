@@ -13,7 +13,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './config/app.effects';
-
+import { EnteteComponent } from './ui/entete/entete.component';
+import { FooterComponent } from './ui/footer/footer.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -22,7 +24,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    EnteteComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
-
+    LeafletModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

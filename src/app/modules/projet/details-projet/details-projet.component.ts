@@ -4,7 +4,8 @@ import { GetProjet } from '../config/projets.actions';
 import { Store } from '@ngrx/store';
 import { State } from '../config/projets.reducer';
 import { Projet } from '../../../models/projet';
-import { getProjet } from '../../../config/reducers';
+import { getProjet, getIsLoading } from '../../../config/reducers';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class DetailsProjetComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<State>
+    private store: Store<State>,
   ) {
     this.route.params.subscribe(params => {
       this.store.dispatch(new GetProjet(+params['id']));
@@ -79,7 +80,7 @@ export class DetailsProjetComponent implements OnInit {
       coordonnateurProjet: '',
       categorieEnv: '',
       objectifGeneral: '',
-    }
+    };
   }
 
 }

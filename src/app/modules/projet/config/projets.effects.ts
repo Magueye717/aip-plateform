@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, Effect } from '@ngrx/effects';
 import {
   ProjetsActionTypes,
   ProjetsActions,
@@ -22,9 +22,6 @@ import { Observable, of } from 'rxjs';
 import { ProjetService } from '../../../services/projet.service';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
-import { Store } from '@ngrx/store';
-import { State } from './projets.reducer';
-
 
 
 @Injectable()
@@ -97,6 +94,5 @@ export class ProjetsEffects {
   constructor(
     private actions$: Actions,
     private projetService: ProjetService,
-    private store: Store<State>
     ) {}
 }

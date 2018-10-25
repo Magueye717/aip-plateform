@@ -4,9 +4,14 @@ import { PageNotFoundComponent } from './ui/page-not-found/page-not-found.compon
 
 const routes: Routes = [
   {
+    path: 'home',
+    loadChildren: './modules/accueil/accueil.module#AccueilModule'
+  },
+  {
     path: 'projets',
     loadChildren: './modules/projet/projet.module#ProjetModule'
   },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

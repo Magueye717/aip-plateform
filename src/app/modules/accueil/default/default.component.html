@@ -1,0 +1,144 @@
+<div class="container-fluid m-0 w-100">
+  <div class="row">
+    <div class="col-md-6 p-0">
+      <div class="filtres position-relative">
+        <form class="form-inline d-flex shadow-bottom-1">
+          <ng-multiselect-dropdown name="typesfinancement" [placeholder]="'Type de financement'" [data]="financementsList"
+            [(ngModel)]="objetRecherche.typesfinancement" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <ng-multiselect-dropdown name="investisseurs" [placeholder]="'Investisseur'" [data]="investisseursList"
+            [(ngModel)]="objetRecherche.investisseurs" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <ng-multiselect-dropdown name="pays" [placeholder]="'Pays'" [data]="paysList" [(ngModel)]="objetRecherche.pays"
+            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <ng-multiselect-dropdown name="secteurs" [placeholder]="'Secteur'" [data]="secteursList" [(ngModel)]="objetRecherche.secteurs"
+            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <ng-multiselect-dropdown name="annees" [placeholder]="'Année'" [data]="anneesList" [(ngModel)]="objetRecherche.annees"
+            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+
+          <button type="submit" class="btn btn-primary mb-2 mt-2" (click)="rechercher()"><img src="../../../../assets/img/ic_search.svg"
+              alt=""></button>
+        </form>
+      </div>
+      <div id="map_container">
+        <div #gmap id="map"></div>
+      </div>
+    </div>
+    <div class="col-md-6 p-0">
+      <div class="bg-gray p-4 stats">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="montant-des-investissement bg-white mb-4 shadow-2">
+              <span class="montant">5290 M$</span>
+              <span class="par-qui">Etat du Sénégal</span>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="montant-des-investissement bg-white mb-4 shadow-2">
+              <span class="montant">4250 M$</span>
+              <span class="par-qui">Les PTF</span>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="montant-des-investissement bg-white mb-4 shadow-2">
+              <span class="montant">2460 M$</span>
+              <span class="par-qui">Le Privé</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="box bg-white px-4 py-3 mb-4 shadow-2">
+              <div class="box-header d-flex mb-3">
+                <h4 class="d-inline-block">Top 5 sources de financement</h4>
+                <label class="ml-auto">
+                  <select name="annee" class="custom-select w-auto" id="loc-finance">
+                    <option value="val1">Afrique</option>
+                    <option value="val2">Angola</option>
+                    <option value="val3">Mali</option>
+                    <option value="val4">Senegal</option>
+                  </select>
+                </label>
+              </div>
+              <div class="box-body">
+                <canvas id="myChart" width="400" height="160"></canvas>
+              </div>
+            </div>
+            <div class="box bg-white px-4 py-3 mb-4 shadow-2">
+              <div class="box-header d-flex mb-3">
+                <h4 class="d-inline-block">Top 5 secteurs les plus financés</h4>
+                <label class="ml-auto">
+                  <select name="annee" class="custom-select w-auto" id="loc-secteur">
+                    <option value="val1">Afrique</option>
+                    <option value="val2">Angola</option>
+                    <option value="val3">Mali</option>
+                    <option value="val4">Senegal</option>
+                  </select>
+                </label>
+              </div>
+              <div class="box-body">
+                <div class="barres-progression mb-3">
+                  <p class="mb-1 d-flex">
+                    <span class="text-uppercase">AGRICULTURE</span>
+                    <span class="ml-auto">$829910 M$</span>
+                  </p>
+                  <div class="progress progress-min mb-3">
+                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="82" aria-valuemin="82"
+                      aria-valuemax="100" style="width:82%"></div>
+                  </div>
+                </div>
+                <div class="barres-progression mb-3">
+                  <p class="mb-1 d-flex">
+                    <span class="text-uppercase">santé</span>
+                    <span class="ml-auto">$793792 M$</span>
+                  </p>
+                  <div class="progress progress-min mb-3">
+                    <div class="progress-bar bg-mauve" role="progressbar" aria-valuenow="75" aria-valuemin="75"
+                      aria-valuemax="100" style="width:75%"></div>
+                  </div>
+                </div>
+                <div class="barres-progression mb-3">
+                  <p class="mb-1 d-flex">
+                    <span class="text-uppercase">Energie</span>
+                    <span class="ml-auto">$528602 M$</span>
+                  </p>
+                  <div class="progress progress-min mb-3">
+                    <div class="progress-bar bg-red" role="progressbar" aria-valuenow="65" aria-valuemin="65"
+                      aria-valuemax="100" style="width:65%"></div>
+                  </div>
+                </div>
+                <div class="barres-progression mb-3">
+                  <p class="mb-1 d-flex">
+                    <span class="text-uppercase">Social</span>
+                    <span class="ml-auto">$498321 M$</span>
+                  </p>
+                  <div class="progress progress-min mb-3">
+                    <div class="progress-bar bg-yellow" role="progressbar" aria-valuenow="47" aria-valuemin="47"
+                      aria-valuemax="100" style="width:47%"></div>
+                  </div>
+                </div>
+                <div class="barres-progression mb-3">
+                  <p class="mb-1 d-flex">
+                    <span class="text-uppercase">Transport</span>
+                    <span class="ml-auto">$390500 M$</span>
+                  </p>
+                  <div class="progress progress-min mb-3">
+                    <div class="progress-bar bg-aqua" role="progressbar" aria-valuenow="35" aria-valuemin="35"
+                      aria-valuemax="100" style="width:35%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
