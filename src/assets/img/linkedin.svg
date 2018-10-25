@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #007ab9;
+      }
+
+      .cls-2 {
+        fill: #f1f2f2;
+      }
+    </style>
+  </defs>
+  <g id="linkedin" transform="translate(0 0.001)">
+    <circle id="Ellipse_19" data-name="Ellipse 19" class="cls-1" cx="18" cy="18" r="18" transform="translate(0 -0.001)"/>
+    <g id="Groupe_303" data-name="Groupe 303" transform="translate(8.685 7.69)">
+      <path id="Tracé_437" data-name="Tracé 437" class="cls-2" d="M47.138,35.726v7.421h-4.3V36.224c0-1.738-.621-2.926-2.179-2.926a2.353,2.353,0,0,0-2.207,1.573,2.945,2.945,0,0,0-.142,1.049v7.227H34s.058-11.726,0-12.94h4.3V32.04c-.009.014-.021.029-.029.042h.029V32.04A4.272,4.272,0,0,1,42.185,29.9c2.831,0,4.953,1.849,4.953,5.823ZM29.5,23.969a2.242,2.242,0,1,0-.056,4.472h.028a2.243,2.243,0,1,0,.029-4.472ZM27.324,43.147h4.3V30.207h-4.3Z" transform="translate(-27.068 -23.969)"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.6 14">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #4e4e4e;
+      }
+    </style>
+  </defs>
+  <path id="ic_date_range_24px" class="cls-1" d="M7.2,8.3H5.8V9.7H7.2Zm2.8,0H8.6V9.7H10Zm2.8,0H11.4V9.7h1.4Zm1.4-4.9h-.7V2H12.1V3.4H6.5V2H5.1V3.4H4.4A1.394,1.394,0,0,0,3.007,4.8L3,14.6A1.4,1.4,0,0,0,4.4,16h9.8a1.4,1.4,0,0,0,1.4-1.4V4.8A1.4,1.4,0,0,0,14.2,3.4Zm0,11.2H4.4V6.9h9.8Z" transform="translate(-3 -2)"/>
+</svg>

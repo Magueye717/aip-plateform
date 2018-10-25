@@ -1,0 +1,87 @@
+/******* page details projet ********/
+h1.projet-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #222222;
+    border-left: solid 7px #F7A031;
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+p.resume {
+    font-size: 14px;
+    color: #666666;
+    font-weight: 300;
+    text-align: justify;
+}
+.breadcrumb {
+    padding: 25px;
+    margin-bottom: 0;
+    background-color: #ffffff;
+    border-radius: .25rem;
+    font-size: 13px;
+}
+.container-fluid {width: 97%;}
+.liste-caracteristiques ul {}
+.liste-caracteristiques ul li {
+    list-style: none;
+    background: #F5F5F5;
+    margin-bottom: 1px;
+    padding: 10px 20px;
+    position: relative;
+}
+.liste-caracteristiques ul li span{
+    font-size: 12px;
+    color: #666666;
+    font-weight: 300;
+    display: block;
+    line-height: 18px;
+}
+.liste-caracteristiques ul li p{
+    font-size: 15px;
+    font-weight: bold;
+    color: #154A80;
+    line-height: 17px;
+}
+li .drapeau-pays {
+    height: 36px;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+.docs-projet h3{
+    color: #222222;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+ul.list-derniers-docs li{ list-style: none; position: relative; padding-left: 18px;
+    margin-bottom: 30px;
+}
+ul.list-derniers-docs li:after {
+    content: '';
+    height: 10px;
+    width: 10px;
+    background: #f7a031;
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: 0;
+}
+ul.list-derniers-docs li p.titre-doc{
+    font-size: 13px;
+    color: #666666;
+    font-weight: 300;
+}
+ul.list-derniers-docs li p.infos-doc{
+    font-size: 12px; font-weight: bold;
+    justify-content: space-between; margin-top: 10px;
+}
+ul.list-derniers-docs li p.infos-doc img {
+    height: 14px; display: inline-block; margin-right: 5px;
+}
+a.see-more {
+    text-decoration: none; font-size: 14px; font-weight: bold;
+}
+a.see-more img{
+    text-decoration: none; height: 10px;
+}

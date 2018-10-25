@@ -1,0 +1,15 @@
+<svg id="facebook_1_" data-name="facebook (1)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #3b5998;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <circle id="Ellipse_18" data-name="Ellipse 18" class="cls-1" cx="18" cy="18" r="18" transform="translate(0 0)"/>
+  <path id="Tracé_429" data-name="Tracé 429" class="cls-2" d="M48.2,33.485H44.993V45.251H40.126V33.485H37.812V29.349h2.314V26.673c0-1.914.909-4.91,4.91-4.91l3.6.015v4.014H46.025a.991.991,0,0,0-1.032,1.127v2.434H48.63Z" transform="translate(-25.679 -14.78)"/>
+</svg>

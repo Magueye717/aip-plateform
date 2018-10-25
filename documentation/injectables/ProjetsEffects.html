@@ -1,0 +1,624 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>aipplatform documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">aipplatform documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>ProjetsEffects</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/modules/projet/config/projets.effects.ts</code>
+        </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addProjet$">addProjet$</a>
+                            </li>
+                            <li>
+                                <a href="#getProjet$">getProjet$</a>
+                            </li>
+                            <li>
+                                <a href="#loadProjets$">loadProjets$</a>
+                            </li>
+                            <li>
+                                <a href="#removeProjet$">removeProjet$</a>
+                            </li>
+                            <li>
+                                <a href="#updateProjet$">updateProjet$</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(actions$: Actions, projetService: <a href="../injectables/ProjetService.html">ProjetService</a>, store: <a href="../interfaces/State.html">Store<State></a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="95" class="link-to-prism">src/app/modules/projet/config/projets.effects.ts:95</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>actions$</td>
+                                                  
+                                                        <td>
+                                                                    <code>Actions</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>projetService</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../injectables/ProjetService.html" target="_self" >ProjetService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>store</td>
+                                                  
+                                                        <td>
+                                                                    <code><a href="../interfaces/State.html" target="_self" >Store&lt;State&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="addProjet$"></a>
+                        <span class="name">
+                            <b>
+                            addProjet$
+                            </b>
+                            <a href="#addProjet$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>addProjet$:     <code><a href="../interfaces/Projet.html" target="_self" >Observable&lt;ProjetsActions&gt;</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../interfaces/Projet.html" target="_self" >Observable&lt;ProjetsActions&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>this.actions$
+    .ofType(ProjetsActionTypes.AddProjet)
+    .map((action: AddProjet) &#x3D;&gt; action.payload)
+    .pipe(
+      switchMap((newProjet) &#x3D;&gt; this.projetService.insert(newProjet)
+        .pipe(
+          map((response) &#x3D;&gt; new AddProjetSuccess(response.idProjet)),
+          catchError((err) &#x3D;&gt; of(new AddProjetError(err)))
+        )
+      )
+    )</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Decorators : </i><code>Effect</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/modules/projet/config/projets.effects.ts:59</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getProjet$"></a>
+                        <span class="name">
+                            <b>
+                            getProjet$
+                            </b>
+                            <a href="#getProjet$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>getProjet$:     <code><a href="../interfaces/Projet.html" target="_self" >Observable&lt;ProjetsActions&gt;</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../interfaces/Projet.html" target="_self" >Observable&lt;ProjetsActions&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>this.actions$
+    .ofType(ProjetsActionTypes.GetProjet)
+    .map((action: GetProjet) &#x3D;&gt; action.payload)
+    .pipe(
+      switchMap((id) &#x3D;&gt; this.projetService.findById(id)
+        .pipe(
+          map((data) &#x3D;&gt; new GetProjetSuccess(data)),
+          catchError((err) &#x3D;&gt; of(new GetProjetError(err)))
+        )
+      )
+    )</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Decorators : </i><code>Effect</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/modules/projet/config/projets.effects.ts:46</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loadProjets$"></a>
+                        <span class="name">
+                            <b>
+                            loadProjets$
+                            </b>
+                            <a href="#loadProjets$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>loadProjets$:     <code><a href="../interfaces/Projet.html" target="_self" >Observable&lt;ProjetsActions&gt;</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../interfaces/Projet.html" target="_self" >Observable&lt;ProjetsActions&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>this.actions$
+    .ofType(ProjetsActionTypes.LoadProjets)
+    .pipe(
+      switchMap(() &#x3D;&gt; this.projetService.listAll()
+        .pipe(
+          map(data &#x3D;&gt; new LoadProjetsSuccess(data)),
+          catchError((err) &#x3D;&gt; of(new LoadProjetsError(err)))
+        )
+      )
+    )</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Decorators : </i><code>Effect</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/modules/projet/config/projets.effects.ts:34</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="removeProjet$"></a>
+                        <span class="name">
+                            <b>
+                            removeProjet$
+                            </b>
+                            <a href="#removeProjet$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>removeProjet$:     <code><a href="../interfaces/Projet.html" target="_self" >Observable&lt;ProjetsActions&gt;</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../interfaces/Projet.html" target="_self" >Observable&lt;ProjetsActions&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>this.actions$
+  .ofType(ProjetsActionTypes.RemoveProjet)
+  .map((action: RemoveProjet) &#x3D;&gt; action.payload)
+  .pipe(
+    switchMap((id) &#x3D;&gt; this.projetService.delete(id)
+      .pipe(
+        map((projetDeleted) &#x3D;&gt; new RemoveProjetSuccess(projetDeleted)),
+        catchError((err) &#x3D;&gt; of(new RemoveProjetError(err)))
+      )
+    )
+  )</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Decorators : </i><code>Effect</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/modules/projet/config/projets.effects.ts:85</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="updateProjet$"></a>
+                        <span class="name">
+                            <b>
+                            updateProjet$
+                            </b>
+                            <a href="#updateProjet$"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <code>updateProjet$:     <code><a href="../interfaces/Projet.html" target="_self" >Observable&lt;ProjetsActions&gt;</a></code>
+</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code><a href="../interfaces/Projet.html" target="_self" >Observable&lt;ProjetsActions&gt;</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>this.actions$
+    .ofType(ProjetsActionTypes.UpdateProjet)
+    .map((action: UpdateProjet) &#x3D;&gt; action.payload)
+    .pipe(
+      switchMap((projet) &#x3D;&gt; this.projetService.update(projet)
+        .pipe(
+          map((projetUpdated) &#x3D;&gt; new UpdateProjetSuccess(projetUpdated)),
+          catchError((err) &#x3D;&gt; of(new UpdateProjetError(err)))
+        )
+      )
+    )</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Decorators : </i><code>Effect</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/modules/projet/config/projets.effects.ts:72</a></div>
+                            </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { Actions, Effect, ofType } from &#x27;@ngrx/effects&#x27;;
+import {
+  ProjetsActionTypes,
+  ProjetsActions,
+  LoadProjetsSuccess,
+  LoadProjetsError,
+  GetProjetSuccess,
+  GetProjetError,
+  GetProjet,
+  AddProjet,
+  AddProjetSuccess,
+  AddProjetError,
+  UpdateProjet,
+  UpdateProjetSuccess,
+  UpdateProjetError,
+  RemoveProjet,
+  RemoveProjetSuccess,
+  RemoveProjetError
+} from &#x27;./projets.actions&#x27;;
+import { Observable, of } from &#x27;rxjs&#x27;;
+import { ProjetService } from &#x27;../../../services/projet.service&#x27;;
+import { catchError, map, switchMap } from &#x27;rxjs/operators&#x27;;
+import &#x27;rxjs/add/operator/map&#x27;;
+import { Store } from &#x27;@ngrx/store&#x27;;
+import { State } from &#x27;./projets.reducer&#x27;;
+
+
+
+@Injectable()
+export class ProjetsEffects {
+
+  @Effect()
+  loadProjets$: Observable&lt;ProjetsActions&gt; &#x3D; this.actions$
+    .ofType(ProjetsActionTypes.LoadProjets)
+    .pipe(
+      switchMap(() &#x3D;&gt; this.projetService.listAll()
+        .pipe(
+          map(data &#x3D;&gt; new LoadProjetsSuccess(data)),
+          catchError((err) &#x3D;&gt; of(new LoadProjetsError(err)))
+        )
+      )
+    );
+
+  @Effect()
+  getProjet$: Observable&lt;ProjetsActions&gt; &#x3D; this.actions$
+    .ofType(ProjetsActionTypes.GetProjet)
+    .map((action: GetProjet) &#x3D;&gt; action.payload)
+    .pipe(
+      switchMap((id) &#x3D;&gt; this.projetService.findById(id)
+        .pipe(
+          map((data) &#x3D;&gt; new GetProjetSuccess(data)),
+          catchError((err) &#x3D;&gt; of(new GetProjetError(err)))
+        )
+      )
+    );
+
+  @Effect()
+  addProjet$: Observable&lt;ProjetsActions&gt; &#x3D; this.actions$
+    .ofType(ProjetsActionTypes.AddProjet)
+    .map((action: AddProjet) &#x3D;&gt; action.payload)
+    .pipe(
+      switchMap((newProjet) &#x3D;&gt; this.projetService.insert(newProjet)
+        .pipe(
+          map((response) &#x3D;&gt; new AddProjetSuccess(response.idProjet)),
+          catchError((err) &#x3D;&gt; of(new AddProjetError(err)))
+        )
+      )
+    );
+
+  @Effect()
+  updateProjet$: Observable&lt;ProjetsActions&gt; &#x3D; this.actions$
+    .ofType(ProjetsActionTypes.UpdateProjet)
+    .map((action: UpdateProjet) &#x3D;&gt; action.payload)
+    .pipe(
+      switchMap((projet) &#x3D;&gt; this.projetService.update(projet)
+        .pipe(
+          map((projetUpdated) &#x3D;&gt; new UpdateProjetSuccess(projetUpdated)),
+          catchError((err) &#x3D;&gt; of(new UpdateProjetError(err)))
+        )
+      )
+    );
+
+  @Effect()
+  removeProjet$: Observable&lt;ProjetsActions&gt; &#x3D; this.actions$
+  .ofType(ProjetsActionTypes.RemoveProjet)
+  .map((action: RemoveProjet) &#x3D;&gt; action.payload)
+  .pipe(
+    switchMap((id) &#x3D;&gt; this.projetService.delete(id)
+      .pipe(
+        map((projetDeleted) &#x3D;&gt; new RemoveProjetSuccess(projetDeleted)),
+        catchError((err) &#x3D;&gt; of(new RemoveProjetError(err)))
+      )
+    )
+  );
+
+  constructor(
+    private actions$: Actions,
+    private projetService: ProjetService,
+    private store: Store&lt;State&gt;
+    ) {}
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProjetsEffects.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <script src="../js/menu-wc.js"></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
