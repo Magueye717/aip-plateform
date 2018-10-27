@@ -2,28 +2,9 @@
   <div class="row">
     <div class="col-md-6 p-0" id="carte">
       <div class="filtres position-relative">
-        <form class="form-inline d-flex shadow-bottom-1">
-          <ng-multiselect-dropdown name="typesfinancement" [placeholder]="'Type de financement'" [data]="financementsList"
-            [(ngModel)]="objetRecherche.typesfinancement" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
-            (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <ng-multiselect-dropdown name="investisseurs" [placeholder]="'Investisseur'" [data]="investisseursList"
-            [(ngModel)]="objetRecherche.investisseurs" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
-            (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <ng-multiselect-dropdown name="pays" [placeholder]="'Pays'" [data]="paysList" [(ngModel)]="objetRecherche.pays"
-            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <ng-multiselect-dropdown name="secteurs" [placeholder]="'Secteur'" [data]="secteursList" [(ngModel)]="objetRecherche.secteurs"
-            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <ng-multiselect-dropdown name="annees" [placeholder]="'Année'" [data]="anneesList" [(ngModel)]="objetRecherche.annees"
-            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-
-          <button type="submit" class="btn btn-primary mb-2 mt-2" (click)="rechercher()"><img src="../../../../assets/img/ic_search.svg"
-              alt=""></button>
-        </form>
+        <!-- <form class="form-inline d-flex shadow-bottom-1">
+          
+        </form> -->
       </div>
       <div id="map_container">
         <div #gmap id="map"></div>
