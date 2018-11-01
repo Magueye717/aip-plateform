@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 12">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f7a031;
+      }
+    </style>
+  </defs>
+  <path id="ic_email_24px" class="cls-1" d="M15.5,4H3.5A1.5,1.5,0,0,0,2.008,5.5L2,14.5A1.5,1.5,0,0,0,3.5,16h12A1.5,1.5,0,0,0,17,14.5v-9A1.5,1.5,0,0,0,15.5,4Zm0,3-6,3.75L3.5,7V5.5l6,3.75,6-3.75Z" transform="translate(-2 -4)"/>
+</svg>

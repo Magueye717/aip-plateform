@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13.852 13.852">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f7a031;
+      }
+    </style>
+  </defs>
+  <path id="ic_pie_chart_24px" class="cls-1" d="M8.233,2V15.852A6.964,6.964,0,0,1,8.233,2ZM9.639,2V8.226h6.213A6.956,6.956,0,0,0,9.639,2Zm0,7.626v6.226a6.95,6.95,0,0,0,6.213-6.226Z" transform="translate(-2 -2)"/>
+</svg>
