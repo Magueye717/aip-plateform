@@ -278,7 +278,7 @@
           </div>
           <div class="tab-content">
             <h3>Composantes</h3>
-            <div *ngIf="projetSelected.composantes.length > 0 ;then composantesSuccess else composantesNull"></div>
+            <div *ngIf="projetSelected.composantes;then composantesSuccess else composantesNull"></div>
             <ng-template #composantesSuccess>
               <div class="row">
                 <div class="col-md-12">
@@ -368,7 +368,7 @@
           </div> -->
           <div class="tab-content">
             <h3>Experts</h3>
-            <div *ngIf="projetSelected.experts.length > 0 ;then expertsSuccess else expertsNull"></div>
+            <div *ngIf="projetSelected.experts ;then expertsSuccess else expertsNull"></div>
             <ng-template #expertsSuccess>
               <div class="projet-contacts">
                 <div class="media mb-4" *ngFor="let expert of projetSelected.experts">
@@ -390,7 +390,7 @@
             </ng-template>
 
             <h3>Autres Contacts</h3>
-            <div *ngIf="projetSelected.contacts.length > 0 ;then contactSuccess else contactNull"></div>
+            <div *ngIf="projetSelected.contacts ;then contactSuccess else contactNull"></div>
             <ng-template #contactSuccess>
               <div class="projet-contacts">
                 <div class="media mb-4" *ngFor="let contact of projetSelected.contacts">
@@ -415,7 +415,7 @@
           <div class="tab-content">
             <h3>Indicateurs du projet</h3>
 
-            <div *ngIf="projetSelected.indicateurs.length > 0;then indicateursProjetSuccess else indicateursProjetNull"></div>
+            <div *ngIf="projetSelected.indicateurs;then indicateursProjetSuccess else indicateursProjetNull"></div>
             <ng-template #indicateursProjetSuccess>
               <div class="row">
                 <div class="col-md-12">
@@ -470,7 +470,7 @@
 
           <div class="tab-content">
             <h3>Resultat3</h3>
-            <div *ngIf="projetSelected.infosAdds.length > 0;then infosProjetSuccess else infosProjetNull"></div>
+            <div *ngIf="projetSelected.infosAdds;then infosProjetSuccess else infosProjetNull"></div>
             <ng-template #infosProjetSuccess>
               <div class="row">
                 <div class="col-md-12">
