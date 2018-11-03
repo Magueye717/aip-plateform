@@ -18,7 +18,7 @@ export interface Projet {
     infosAdds?: any[];
     contacts?: any[];
     experts?: any[];
-    pays?: any[];
+    pays?: Pays[];
     composantes?: any[];
     secteurs?: any[];
     structureResps?: string;
@@ -26,5 +26,8 @@ export interface Projet {
     documents?: any[];
 }
 
-
-
+interface Pays {
+    idPays: number;
+    codePays: string;
+    nomPays: string;
+}

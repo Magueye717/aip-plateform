@@ -4,7 +4,7 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="#">{{ 'Accueil' | translate}}</a></li>
-          <li class="breadcrumb-item active" aria-current="page">{{'Projets' | translate}}</li>
+          <li class="breadcrumb-item active" aria-current="page">{{ 'Projets' | translate}}</li>
         </ol>
       </nav>
     </div>
@@ -27,11 +27,13 @@
             <ul class="m-0 p-0">
               <li>
                 <span>{{'Secteur' | translate}} :</span>
-                <p class="mb-0">{{projetSelected.categorieEnv}}</p>
+                <p class="mb-0" *ngFor="let sect of projetSelected.secteurs">
+                  {{sect.libelle}} &nbsp;
+                </p>
               </li>
               <li>
                 <span>{{ 'Pays' | translate}} :</span>
-                <p class="mb-0">Sénégal</p>
+                <p class="mb-0" *ngFor="let p of projetSelected.pays">{{p.nomPays}}</p>
                 <img class="drapeau-pays" src={{drapeau}} alt="">
               </li>
               <li>
@@ -192,18 +194,19 @@
       <div class="investisseurs mb-4">
         <h2>INVESTISSEURS :</h2>
         <div class="row">
-          <div class="col-sm-4 col-12 col-md-4 px-2 mb-3">
+          <div class="col-sm-4 col-12 col-md-4 px-2 mb-3" *ngFor="let acteur of projetSelected.financements">
             <div class="un-ivestisseur shadow-2">
               <div class="d-flex">
-                <img src="../../assets/img/usaid.svg" alt="">
-                <span class="nom-inv">{{projetSelected.acteurFinance}}</span>
+                <img src={{acteur.acteurFinancement.urlLogo}} alt="">
+                <span class="nom-inv">{{acteur.acteurFinancement.nomActeur}}</span>
               </div>
               <p class="mb-0">
-                <span class="montant">590 M$</span> soit <span class="montant-pct">45%</span>
+                <span class="montant">{{acteur.montant}}&nbsp;{{acteur.devise}}</span> soit <span class="montant-pct">45%</span>
               </p>
             </div>
+
           </div>
-         <!--  <div class="col-sm-4 col-12 col-md-4 px-2 mb-3">
+          <!--  <div class="col-sm-4 col-12 col-md-4 px-2 mb-3">
             <div class="un-ivestisseur shadow-2">
               <div class="d-flex">
                 <img src="../../assets/img/bm.svg" alt="">
@@ -249,25 +252,79 @@
           <label for="tab2">Composantes</label>
           <!-- <input type="radio" id="tab3" name="tabGroup1" class="tab">
           <label for="tab3">Résultat</label> -->
+          <input type="radio" id="tab3" name="tabGroup1" class="tab">
+          <label for="tab3">Contacts</label>
           <input type="radio" id="tab4" name="tabGroup1" class="tab">
-          <label for="tab4">Contacts</label>
+          <label for="tab4">Indicateurs</label>
+          <input type="radio" id="tab6" name="tabGroup1" class="tab">
+          <label for="tab6">Informations Additionnelles</label>
           <div class="tab-content">
             <h3>Description</h3>
-            <div *ngIf="projetSelected.objectifGeneral !== null;then objectifGeneralSuccess else objectifGeneralNull"></div>
-            <ng-template #objectifGeneralSuccess>
-              <p>{{projetSelected.objectifGeneral}}</p>
+            <div *ngIf="projetSelected.descriptionProjet !== null;then descriptionProjetSuccess else descriptionProjetNull"></div>
+            <ng-template #descriptionProjetSuccess>
+              <p>{{projetSelected.descriptionProjet}}</p>
             </ng-template>
-            <ng-template #objectifGeneralNull>
+            <ng-template #descriptionProjetNull>
               <p class="text-center">Description du projet non renseigné</p>
             </ng-template>
-            <h3>Objectifs</h3>
-            <p>{{projetSelected.objectifGeneral}}</p>
+            <h3>Objectifs Spécifiques</h3>
+            <p *ngFor="let obj of projetSelected.objectifSpecs">
+              - &nbsp;{{obj.libelle}}
+            </p>
+            <h3>Cibles du projet</h3>
+            <p *ngFor="let obj of projetSelected.ciblesProjets">
+              - &nbsp;{{obj.nomCible}}
+            </p>
           </div>
           <div class="tab-content">
             <h3>Composantes</h3>
             <div *ngIf="projetSelected.composantes.length > 0 ;then composantesSuccess else composantesNull"></div>
             <ng-template #composantesSuccess>
-              <div class="projet-contacts">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="liste-caracteristiques mb-4">
+                    <ul class="m-0 p-0">
+                      <li>
+                        <ul *ngFor="let comp of projetSelected.composantes;first as isFirst">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <li>
+                                <span *ngIf="isFirst">{{'Libelle' | translate}} :</span>
+                                <p class="mb-0">
+                                  {{comp.libelle}}
+                                </p>
+                              </li>
+                            </div>
+                            <div class="col-md-4">
+                              <li>
+                                <span *ngIf="isFirst">{{'Description' | translate}} :</span>
+                                <p class="mb-0">
+                                  {{comp.description}}
+                                </p>
+                              </li>
+                            </div>
+                            <div class="col-md-4">
+                              <li>
+                                <span *ngIf="isFirst">{{'Montant' | translate}} :</span>
+                                <p class="mb-0">
+                                  {{comp.montant}}
+                                </p>
+                              </li>
+                            </div>
+
+                          </div>
+
+
+                        </ul>
+
+                      </li>
+
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!--div class="projet-contacts">
                 <div class="media mb-4" *ngFor="let comp of projetSelected.composantes">
                   <img class="mr-3" src="../../assets/img/contact1.png" alt="">
                   <div class="media-body">
@@ -278,7 +335,7 @@
                       {{comp.mail}}</p>
                   </div>
                 </div>
-              </div>
+              </div>-->
             </ng-template>
             <ng-template #composantesNull>
               <div class="projet-contacts">
@@ -286,7 +343,7 @@
               </div>
             </ng-template>
           </div>
-         <!--  <div class="tab-content">
+          <!--  <div class="tab-content">
             <h3>Résultat</h3>
             <div *ngIf="projetSelected.composantes ;then composantesSuccess else composantesNull"></div>
             <ng-template #composantesSuccess>
@@ -310,7 +367,29 @@
             </ng-template>
           </div> -->
           <div class="tab-content">
-            <h3>Contacts</h3>
+            <h3>Experts</h3>
+            <div *ngIf="projetSelected.experts.length > 0 ;then expertsSuccess else expertsNull"></div>
+            <ng-template #expertsSuccess>
+              <div class="projet-contacts">
+                <div class="media mb-4" *ngFor="let expert of projetSelected.experts">
+                  <img class="mr-3" src="../../assets/img/contact1.png" alt="">
+                  <div class="media-body">
+                    <h5 class="mt-0 titre2 mb-1">{{expert.prenom}} {{expert.nom}}</h5>
+                    <p class="small-1 mb-3">{{expert.pays.nomPays}}</p>
+                    <p class="small-1 mb-1"><img src="../../assets/img/ic_call-jaune.svg" alt=""> {{expert.telephone}}</p>
+                    <p class="small-1 mb-1"><img src="../../assets/img/ic_email-jaune.svg" alt="">
+                      {{expert.mail}}</p>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #expertsNull>
+              <div class="projet-contacts">
+                <p class="text-center">Pas d'expert répertorié</p>
+              </div>
+            </ng-template>
+
+            <h3>Autres Contacts</h3>
             <div *ngIf="projetSelected.contacts.length > 0 ;then contactSuccess else contactNull"></div>
             <ng-template #contactSuccess>
               <div class="projet-contacts">
@@ -318,7 +397,7 @@
                   <img class="mr-3" src="../../assets/img/contact1.png" alt="">
                   <div class="media-body">
                     <h5 class="mt-0 titre2 mb-1">{{contact.nom}} {{contact.prenom}}</h5>
-                    <p class="small-1 mb-3">Coordonnateur</p>
+                    <p class="small-1 mb-3">{{contact.structure}}</p>
                     <p class="small-1 mb-1"><img src="../../assets/img/ic_call-jaune.svg" alt=""> {{contact.telephone}}</p>
                     <p class="small-1 mb-1"><img src="../../assets/img/ic_email-jaune.svg" alt="">
                       {{contact.mail}}</p>
@@ -332,6 +411,107 @@
               </div>
             </ng-template>
 
+          </div>
+          <div class="tab-content">
+            <h3>Indicateurs du projet</h3>
+
+            <div *ngIf="projetSelected.indicateurs.length > 0;then indicateursProjetSuccess else indicateursProjetNull"></div>
+            <ng-template #indicateursProjetSuccess>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="liste-caracteristiques mb-4">
+                    <ul class="m-0 p-0">
+                      <li>
+                        <ul *ngFor="let ind of projetSelected.indicateurs;first as isFirst">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <li>
+                                <span *ngIf="isFirst">{{'Libelle' | translate}} :</span>
+                                <p class="mb-0">
+                                  {{ind.nomIndicateurs}}
+                                </p>
+                              </li>
+                            </div>
+                            <div class="col-md-4">
+                              <li>
+                                <span *ngIf="isFirst">{{'Valeur de Référence' | translate}} :</span>
+                                <p class="mb-0">
+                                  {{ind.valeurRef}}
+                                </p>
+                              </li>
+                            </div>
+                            <div class="col-md-4">
+                              <li>
+                                <span *ngIf="isFirst">{{'Valeur Cible' | translate}} :</span>
+                                <p class="mb-0">
+                                  {{ind.valeurCible}}
+                                </p>
+                              </li>
+                            </div>
+
+                          </div>
+
+
+                        </ul>
+
+                      </li>
+
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #indicateursProjetNull>
+              <p class="text-center">Aucun indicateur renseigné </p>
+            </ng-template>
+
+          </div>
+
+          <div class="tab-content">
+            <h3>Resultat3</h3>
+            <div *ngIf="projetSelected.infosAdds.length > 0;then infosProjetSuccess else infosProjetNull"></div>
+            <ng-template #infosProjetSuccess>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="liste-caracteristiques mb-4">
+                    <ul class="m-0 p-0">
+                      <li>
+                        <ul *ngFor="let info of projetSelected.infosAdds;first as isFirst">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <li>
+                                <span *ngIf="isFirst">{{'Libelle' | translate}} :</span>
+                                <p class="mb-0">
+                                  {{info.nomInfoAdd}}
+                                </p>
+                              </li>
+                            </div>
+                            <div class="col-md-6">
+                              <li>
+                                <span *ngIf="isFirst">{{'Valeur' | translate}} :</span>
+                                <p class="mb-0">
+                                  {{info.valeurInfoAdd}}
+                                </p>
+                              </li>
+                            </div>
+
+                          </div>
+
+
+                        </ul>
+
+                      </li>
+
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #infosProjetNull>
+              <p class="text-center">Aucune information additionnelle</p>
+            </ng-template>
           </div>
         </div>
       </div>

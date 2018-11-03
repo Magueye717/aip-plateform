@@ -4,6 +4,7 @@ import { State } from 'src/app/modules/projet/config/projets.reducer';
 import { LoadProjets, GetProjet } from './config/projets.actions';
 import { isCreated, getAllProjets, loadProjetsError } from '../../config/reducers';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -15,9 +16,13 @@ export class ProjetComponent implements OnInit {
 
   constructor(
     private store: Store<State>,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
     ) {
+    console.log(this.translate.getDefaultLang());
+    this.translate.setDefaultLang('fr');
    }
+
 
   ngOnInit() {
     this.store.dispatch(new LoadProjets());

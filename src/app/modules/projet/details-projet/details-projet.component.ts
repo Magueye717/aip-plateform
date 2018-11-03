@@ -38,6 +38,13 @@ export class DetailsProjetComponent implements OnInit {
     coordonnateurProjet: '',
     categorieEnv: '',
     objectifGeneral: '',
+    pays: [
+      {
+        idPays: null,
+        codePays: null,
+        nomPays: null
+      }
+    ]
   };
 
   drapeau: any;
@@ -56,12 +63,13 @@ export class DetailsProjetComponent implements OnInit {
         this.initialize();
         this.projetSelected = projet;
         console.log(this.projetSelected);
+
+        this.drapeau = '../../assets/img/flags/' + this.projetSelected.pays[0].codePays.toLowerCase() + '.svg';
       }
     });
   }
 
   ngOnInit() {
-    this.drapeau = '../../assets/img/flags/' + this.projet.pays.code + '.svg';
   }
 
   initialize() {
