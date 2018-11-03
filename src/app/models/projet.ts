@@ -24,6 +24,7 @@ export interface Projet {
     structureResps?: string;
     indicateurs?: any[];
     documents?: any[];
+    financements?: any[];
 }
 
 interface Pays {

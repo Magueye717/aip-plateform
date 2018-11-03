@@ -14,7 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./details-projet.component.css']
 })
 export class DetailsProjetComponent implements OnInit {
-  idProjet: number;
+  idProjet: 0;
   projet = {
     secteur: 'Agriculture et développement rural',
     pays: {
@@ -38,13 +38,18 @@ export class DetailsProjetComponent implements OnInit {
     coordonnateurProjet: '',
     categorieEnv: '',
     objectifGeneral: '',
-    pays: [
-      {
-        idPays: null,
-        codePays: null,
-        nomPays: null
-      }
-    ]
+    objectifSpecs: [],
+    ciblesProjets: [],
+    infosAdds: [],
+    contacts: [],
+    experts: [],
+    pays: [],
+    composantes: [],
+    secteurs: [],
+    structureResps: '',
+    indicateurs: [],
+    documents: [],
+    financements: []
   };
 
   drapeau: any;
@@ -88,6 +93,18 @@ export class DetailsProjetComponent implements OnInit {
       coordonnateurProjet: '',
       categorieEnv: '',
       objectifGeneral: '',
+      objectifSpecs: [],
+      ciblesProjets: [],
+      infosAdds: [],
+      contacts: [],
+      experts: [],
+      pays: [],
+      composantes: [],
+      secteurs: [],
+      structureResps: '',
+      indicateurs: [],
+      documents: [],
+      financements: []
     };
   }
 
