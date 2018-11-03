@@ -3,27 +3,27 @@
     <div class="row mb-3 mt-3">
       <div class="col-md-3">
         <ng-select [items]="financementsList" name="listeFinancements" bindLabel="name" bindValue="id" [multiple]="true"
-          placeholder="Financement(s)" [(ngModel)]="selectedFinancement">
+          placeholder="Financement(s)">
         </ng-select>
       </div>
       <div class="col-md-2">
         <ng-select [items]="investisseursList" name="listeInvestisseurs" bindLabel="name" bindValue="id" [multiple]="true"
-          placeholder="Investisseur(s)" [(ngModel)]="selectedInvestisseurs">
+          placeholder="Investisseur(s)">
         </ng-select>
       </div>
       <div class="col-md-2">
         <ng-select [items]="paysList" name="listePays" bindLabel="name" bindValue="id" [multiple]="true" placeholder="Pays"
-          [(ngModel)]="selectedPays">
+          >
         </ng-select>
       </div>
       <div class="col-md-2">
         <ng-select [items]="secteursList" name="listeSecteurs" bindLabel="name" bindValue="id" [multiple]="true"
-          placeholder="Secteur(s)" [(ngModel)]="selectedSecteurs">
+          placeholder="Secteur(s)">
         </ng-select>
       </div>
       <div class="col-md-2">
         <ng-select [items]="anneesList" name="listeAnnees" bindLabel="name" bindValue="id" [multiple]="true"
-          placeholder="Année" [(ngModel)]="selectedAnnees">
+          placeholder="Année" >
         </ng-select>
       </div>
       <div class="col-md-1">
@@ -47,7 +47,7 @@
           <div class="col-sm-4">
             <div class="montant-des-investissement bg-white mb-4 shadow-2">
               <span class="montant">5290 M$</span>
-              <span class="par-qui">Etat du {{paysSelected}}</span>
+              <span class="par-qui">Etat du Sénégal</span>
             </div>
           </div>
           <div class="col-sm-4">
