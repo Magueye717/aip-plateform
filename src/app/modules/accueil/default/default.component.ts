@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 
-import africa from './custom.geo.json';
-import { tileLayer, latLng, Marker, marker, icon } from 'leaflet';
-
+import africa from './africa.geo.json';
+import * as L from 'leaflet';
+import * as LM from 'leaflet.markercluster';
 
 @Component({
     selector: 'app-default',
@@ -19,15 +19,8 @@ export class DefaultComponent implements OnInit {
     paysList = [];
     secteursList = [];
     anneesList = [];
-    paysSelected = 'Sénégal';
 
-    selectedFinancement: number[];
-    selectedInvestisseurs: number[];
-    selectedPays: number[];
-    selectedSecteurs: number[];
-    selectedAnnees: number[];
 
-    dropdownSettings = {};
 
     objetRecherche = {
         typesfinancement: [],
@@ -37,40 +30,50 @@ export class DefaultComponent implements OnInit {
         annees: []
     };
 
-    statesData;
-    /*  featureLayer = new L.GeoJSON();
-     defaultStyle = {
-         color: '#2262CC',
-         weight: 2,
-         opacity: 0.6,
-         fillOpacity: 0.1,
-         fillColor: '#2262CC'
-     };
-     highlightStyle = {
-         color: '#2262CC',
-         weight: 3,
-         opacity: 0.6,
-         fillOpacity: 0.65,
-         fillColor: '#2262CC'
-     }; */
+    featureLayer = new L.GeoJSON();
+    defaultStyle = {
+        color: '#2262CC',
+        weight: 2,
+        opacity: 0.6,
+        fillOpacity: 0.1,
+        fillColor: '#2262CC'
+    };
+    highlightStyle = {
+        color: '#2262CC',
+        weight: 3,
+        opacity: 0.6,
+        fillOpacity: 0.65,
+        fillColor: '#2262CC'
+    };
 
 
 
     constructor() { }
 
     ngOnInit() {
-        console.log(this.paysSelected);
-        // initialize the map on the "map" div with a given center and zoom
-        /*  const map = L.map('map', { scrollWheelZoom: false }).setView([-8.783195, 34.50852299999997], 3);
-         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
-                 '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,' +
-                 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-             maxZoom: 18,
-             id: 'mapbox.streets',
-             accessToken: 'pk.eyJ1IjoicGFwYW91c21hbmUiLCJhIjoiY2pvMDN5MHlsMDYwdjNwcGJlYmJxajI5OCJ9.OmLCeU1G-rS8UB_YTRI59w'
-         }).addTo(map); */
-        /* const geojsonMarkerOptions = {
+        this.initMap();
+        this.initListSearching();
+        this.initChart();
+    }
+
+    /**
+     * Init Map
+     */
+    initMap() {
+        const map = L.map('map', {
+            scrollWheelZoom: false,
+            touchZoom: false,
+            doubleClickZoom: false,
+        }).setView([2.0000003, 15.9999997], 3.5);
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
+                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,' +
+                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox.streets',
+            accessToken: 'pk.eyJ1IjoicGFwYW91c21hbmUiLCJhIjoiY2pvMDN5MHlsMDYwdjNwcGJlYmJxajI5OCJ9.OmLCeU1G-rS8UB_YTRI59w'
+        }).addTo(map);
+        const geojsonMarkerOptions = {
             radius: 8,
             fillColor: '#ff7800',
             color: '#000',
@@ -78,21 +81,18 @@ export class DefaultComponent implements OnInit {
             opacity: 1,
             fillOpacity: 0.8
         };
-        L.geoJSON(africa).addTo(map); */
-        /*  this.featureLayer = L.geoJSON(africa, {
-             // And link up the function to run when loading each feature
-             onEachFeature: this.onEachFeature
-         });
-         // Finally, add the layer to the map.
-         map.addLayer(this.featureLayer); */
+        L.geoJSON(africa).addTo(map);
+        this.featureLayer = L.geoJSON(africa, {
+            onEachFeature: this.onEachFeature
+        });
+        map.addLayer(this.featureLayer);
 
+    }
 
-        this.selectedFinancement = [];
-        this.selectedAnnees = [];
-        this.selectedInvestisseurs = [];
-        this.selectedPays = [];
-        this.selectedSecteurs = [];
-
+    /**
+     * list of choice for multiselecting search
+     */
+    initListSearching() {
         this.financementsList = [
             { id: 1, name: 'Etat' },
             { id: 2, name: 'PTF' },
@@ -119,19 +119,12 @@ export class DefaultComponent implements OnInit {
             { id: 2, name: '2017' },
             { id: 3, name: '2018' },
         ];
+    }
 
-        //  this.objetRecherche.typesfinancement.push(this.financementsList[0]);
-
-        this.dropdownSettings = {
-            singleSelection: false,
-            idField: 'id',
-            textField: 'name',
-            selectAllText: 'Tout selectionner',
-            unSelectAllText: 'Tout deselectionner',
-            itemsShowLimit: 3,
-            allowSearchFilter: true
-        };
-
+    /**
+     * Chart initilisation
+     */
+    initChart() {
         this.MyChart = new Chart('myChart', {
             type: 'pie',
             data: {
@@ -160,24 +153,18 @@ export class DefaultComponent implements OnInit {
                 }
             }
         });
-
-
     }
 
-
-   /*  onEachFeature(feature, layer) {
-        // Load the default style.
+    /**
+     * features.length
+     */
+    onEachFeature(feature, layer) {
         layer.setStyle(this.defaultStyle);
-        // Create a self-invoking function that passes in the layer
-        // and the properties associated with this particular record.
         (function (layer, properties) {
-            // Create a mouseover event
             layer.on('mouseover', function (e) {
-                // Change the style to the highlighted version
                 layer.setStyle(this.highlightStyle);
-                // Create a popup with a unique ID linked to this record
                 const popup = $('<div></div>', {
-                    id: 'popup-' + properties.party,
+                    id: 'popup-' + properties.cartodb_id,
                     css: {
                         position: 'absolute',
                         bottom: '85px',
@@ -188,30 +175,23 @@ export class DefaultComponent implements OnInit {
                         border: '1px solid #ccc'
                     }
                 });
-                // Insert a headline into that popup
                 const hed = $('<div></div>', {
                     text: properties.name,
                     css: { fontSize: '16px', marginBottom: '3px' }
                 }).appendTo(popup);
-                // Add the popup to the map
                 popup.appendTo('#map');
             });
-            // Create a mouseout event that undoes the mouseover changes
             layer.on('mouseout', function (e) {
-                // Start by reverting the style back
                 layer.setStyle(this.defaultStyle);
-                // And then destroying the popup
-                $('#popup-' + properties.party).remove();
+                $('#popup-' + properties.cartodb_id).remove();
             });
 
             layer.on('click', function (e) {
                 this.paysSelected = properties.name;
                 console.log(this.paysSelected);
             });
-            // Close the "anonymous" wrapper function, and call it while passing
-            // in the variables necessary to make the events work the way we want.
         })(layer, feature.properties);
-    } */
+    }
 
     rechercher() {
         console.log('Iciiiiiiii: ' + JSON.stringify(this.objetRecherche));

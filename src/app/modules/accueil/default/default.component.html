@@ -37,22 +37,9 @@
         <form class="form-inline d-flex shadow-bottom-1">
         </form>
       </div> -->
-      <!-- <div id="map_container">
+      <div id="map_container">
         <div id="map"></div>
-      </div> -->
-      <mgl-map [style]="'mapbox://styles/mapbox/streets-v9'" [zoom]="[9]" [center]="[-74.50, 40]">
-        <mgl-marker-cluster
-      [data]="africa"
-      [maxZoom]="14"
-      [radius]="50">
-      <ng-template mglPoint let-feature>
-        Marker!
-      </ng-template>
-      <ng-template mglClusterPoint let-feature>
-        Cluster!
-      </ng-template>
-    </mgl-marker-cluster>
-      </mgl-map>
+      </div>
     </div>
     <div class="col-md-6 p-0">
       <div class="bg-gray p-4 stats">
