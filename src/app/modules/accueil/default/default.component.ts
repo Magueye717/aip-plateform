@@ -1,11 +1,9 @@
-/// <reference types="@types/googlemaps" />
-
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 
-declare var $: any;
+import africa from './custom.geo.json';
+import { tileLayer, latLng, Marker, marker, icon } from 'leaflet';
 
-import { ViewChild } from '@angular/core';
 
 @Component({
     selector: 'app-default',
@@ -14,16 +12,21 @@ import { ViewChild } from '@angular/core';
 })
 export class DefaultComponent implements OnInit {
     MyChart = [];
-    @ViewChild('gmap') gmapElement: any;
-    map: google.maps.Map;
+    africa = africa;
 
     financementsList = [];
     investisseursList = [];
     paysList = [];
     secteursList = [];
     anneesList = [];
+    paysSelected = 'Sénégal';
 
-    selectedItems = [];
+    selectedFinancement: number[];
+    selectedInvestisseurs: number[];
+    selectedPays: number[];
+    selectedSecteurs: number[];
+    selectedAnnees: number[];
+
     dropdownSettings = {};
 
     objetRecherche = {
@@ -34,43 +37,95 @@ export class DefaultComponent implements OnInit {
         annees: []
     };
 
+    statesData;
+    /*  featureLayer = new L.GeoJSON();
+     defaultStyle = {
+         color: '#2262CC',
+         weight: 2,
+         opacity: 0.6,
+         fillOpacity: 0.1,
+         fillColor: '#2262CC'
+     };
+     highlightStyle = {
+         color: '#2262CC',
+         weight: 3,
+         opacity: 0.6,
+         fillOpacity: 0.65,
+         fillColor: '#2262CC'
+     }; */
+
+
 
     constructor() { }
 
     ngOnInit() {
+        console.log(this.paysSelected);
+        // initialize the map on the "map" div with a given center and zoom
+        /*  const map = L.map('map', { scrollWheelZoom: false }).setView([-8.783195, 34.50852299999997], 3);
+         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
+                 '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,' +
+                 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+             maxZoom: 18,
+             id: 'mapbox.streets',
+             accessToken: 'pk.eyJ1IjoicGFwYW91c21hbmUiLCJhIjoiY2pvMDN5MHlsMDYwdjNwcGJlYmJxajI5OCJ9.OmLCeU1G-rS8UB_YTRI59w'
+         }).addTo(map); */
+        /* const geojsonMarkerOptions = {
+            radius: 8,
+            fillColor: '#ff7800',
+            color: '#000',
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
+        L.geoJSON(africa).addTo(map); */
+        /*  this.featureLayer = L.geoJSON(africa, {
+             // And link up the function to run when loading each feature
+             onEachFeature: this.onEachFeature
+         });
+         // Finally, add the layer to the map.
+         map.addLayer(this.featureLayer); */
+
+
+        this.selectedFinancement = [];
+        this.selectedAnnees = [];
+        this.selectedInvestisseurs = [];
+        this.selectedPays = [];
+        this.selectedSecteurs = [];
+
         this.financementsList = [
-            { item_id: 1, item_text: 'Etat' },
-            { item_id: 2, item_text: 'PTF' },
-            { item_id: 3, item_text: 'ONG' },
+            { id: 1, name: 'Etat' },
+            { id: 2, name: 'PTF' },
+            { id: 3, name: 'ONG' },
         ];
         this.investisseursList = [
-            { item_id: 1, item_text: 'Banque Mondiale' },
-            { item_id: 2, item_text: 'ICF' },
-            { item_id: 3, item_text: 'USAID' },
+            { id: 1, name: 'Banque Mondiale' },
+            { id: 2, name: 'ICF' },
+            { id: 3, name: 'USAID' },
         ];
         this.paysList = [
-            { item_id: 1, item_text: 'Angola' },
-            { item_id: 2, item_text: 'Burkina' },
-            { item_id: 3, item_text: 'Mali' },
-            { item_id: 4, item_text: 'Senegal' },
+            { id: 1, name: 'Angola' },
+            { id: 2, name: 'Burkina' },
+            { id: 3, name: 'Mali' },
+            { id: 4, name: 'Senegal' },
         ];
         this.secteursList = [
-            { item_id: 1, item_text: 'Agriculture' },
-            { item_id: 2, item_text: 'Energie' },
-            { item_id: 3, item_text: 'Santé' },
+            { id: 1, name: 'Agriculture' },
+            { id: 2, name: 'Energie' },
+            { id: 3, name: 'Santé' },
         ];
         this.anneesList = [
-            { item_id: 1, item_text: '2016' },
-            { item_id: 2, item_text: '2017' },
-            { item_id: 3, item_text: '2018' },
+            { id: 1, name: '2016' },
+            { id: 2, name: '2017' },
+            { id: 3, name: '2018' },
         ];
 
         //  this.objetRecherche.typesfinancement.push(this.financementsList[0]);
 
         this.dropdownSettings = {
             singleSelection: false,
-            idField: 'item_id',
-            textField: 'item_text',
+            idField: 'id',
+            textField: 'name',
             selectAllText: 'Tout selectionner',
             unSelectAllText: 'Tout deselectionner',
             itemsShowLimit: 3,
@@ -107,59 +162,62 @@ export class DefaultComponent implements OnInit {
         });
 
 
-
-        const myLatlng = new google.maps.LatLng(1.1379666, 11.9660955, true),
-            mapOptions = {
-                zoom: 3,
-                center: myLatlng,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-
-        const myLatlng1 = {
-            center: new google.maps.LatLng(1.1379666, 11.9660955, true),
-            zoom: 3,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-
-        const map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        const contentString = 'Times Square, Manhattan';
-        const infowindow = new google.maps.InfoWindow({
-            content: contentString,
-            maxWidth: 500
-        });
-
-        const marker = new google.maps.Marker({
-            position: myLatlng,
-            map: map
-        });
-
-        google.maps.event.addListener(marker, 'click', function () {
-            infowindow.open(map, marker);
-        });
-
-        google.maps.event.addDomListener(window, 'resize', function () {
-            const center = map.getCenter();
-            google.maps.event.trigger(map, 'resize');
-            map.setCenter(center);
-        });
-
-
-
-
-        this.map = new google.maps.Map(this.gmapElement.nativeElement, myLatlng1);
-
-
     }
+
+
+   /*  onEachFeature(feature, layer) {
+        // Load the default style.
+        layer.setStyle(this.defaultStyle);
+        // Create a self-invoking function that passes in the layer
+        // and the properties associated with this particular record.
+        (function (layer, properties) {
+            // Create a mouseover event
+            layer.on('mouseover', function (e) {
+                // Change the style to the highlighted version
+                layer.setStyle(this.highlightStyle);
+                // Create a popup with a unique ID linked to this record
+                const popup = $('<div></div>', {
+                    id: 'popup-' + properties.party,
+                    css: {
+                        position: 'absolute',
+                        bottom: '85px',
+                        left: '50px',
+                        zIndex: 1002,
+                        backgroundColor: 'white',
+                        padding: '8px',
+                        border: '1px solid #ccc'
+                    }
+                });
+                // Insert a headline into that popup
+                const hed = $('<div></div>', {
+                    text: properties.name,
+                    css: { fontSize: '16px', marginBottom: '3px' }
+                }).appendTo(popup);
+                // Add the popup to the map
+                popup.appendTo('#map');
+            });
+            // Create a mouseout event that undoes the mouseover changes
+            layer.on('mouseout', function (e) {
+                // Start by reverting the style back
+                layer.setStyle(this.defaultStyle);
+                // And then destroying the popup
+                $('#popup-' + properties.party).remove();
+            });
+
+            layer.on('click', function (e) {
+                this.paysSelected = properties.name;
+                console.log(this.paysSelected);
+            });
+            // Close the "anonymous" wrapper function, and call it while passing
+            // in the variables necessary to make the events work the way we want.
+        })(layer, feature.properties);
+    } */
 
     rechercher() {
         console.log('Iciiiiiiii: ' + JSON.stringify(this.objetRecherche));
     }
-
-    onItemSelect(item: any) {
-        console.log(JSON.stringify(this.objetRecherche.typesfinancement));
-    }
-    onSelectAll(items: any) {
-        console.log(items);
+    onMapClick(e) {
+        console.log('You clicked the map at ' + e.latlng.toString());
     }
 
 }

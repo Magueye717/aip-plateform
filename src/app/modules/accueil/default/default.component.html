@@ -1,33 +1,58 @@
 <div class="container-fluid m-0 w-100">
+  <form>
+    <div class="row mb-3 mt-3">
+      <div class="col-md-3">
+        <ng-select [items]="financementsList" name="listeFinancements" bindLabel="name" bindValue="id" [multiple]="true"
+          placeholder="Financement(s)" [(ngModel)]="selectedFinancement">
+        </ng-select>
+      </div>
+      <div class="col-md-2">
+        <ng-select [items]="investisseursList" name="listeInvestisseurs" bindLabel="name" bindValue="id" [multiple]="true"
+          placeholder="Investisseur(s)" [(ngModel)]="selectedInvestisseurs">
+        </ng-select>
+      </div>
+      <div class="col-md-2">
+        <ng-select [items]="paysList" name="listePays" bindLabel="name" bindValue="id" [multiple]="true" placeholder="Pays"
+          [(ngModel)]="selectedPays">
+        </ng-select>
+      </div>
+      <div class="col-md-2">
+        <ng-select [items]="secteursList" name="listeSecteurs" bindLabel="name" bindValue="id" [multiple]="true"
+          placeholder="Secteur(s)" [(ngModel)]="selectedSecteurs">
+        </ng-select>
+      </div>
+      <div class="col-md-2">
+        <ng-select [items]="anneesList" name="listeAnnees" bindLabel="name" bindValue="id" [multiple]="true"
+          placeholder="Année" [(ngModel)]="selectedAnnees">
+        </ng-select>
+      </div>
+      <div class="col-md-1">
+        <button type="submit" class="btn btn-primary" (click)="rechercher()"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </form>
   <div class="row">
     <div class="col-md-6 p-0">
-      <div class="filtres position-relative">
+      <!--  <div class="filtres position-relative">
         <form class="form-inline d-flex shadow-bottom-1">
-          <ng-multiselect-dropdown name="typesfinancement" [placeholder]="'Type de financement'" [data]="financementsList"
-            [(ngModel)]="objetRecherche.typesfinancement" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
-            (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <ng-multiselect-dropdown name="investisseurs" [placeholder]="'Investisseur'" [data]="investisseursList"
-            [(ngModel)]="objetRecherche.investisseurs" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
-            (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <ng-multiselect-dropdown name="pays" [placeholder]="'Pays'" [data]="paysList" [(ngModel)]="objetRecherche.pays"
-            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <ng-multiselect-dropdown name="secteurs" [placeholder]="'Secteur'" [data]="secteursList" [(ngModel)]="objetRecherche.secteurs"
-            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-          <ng-multiselect-dropdown name="annees" [placeholder]="'Année'" [data]="anneesList" [(ngModel)]="objetRecherche.annees"
-            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
-
-          <button type="submit" class="btn btn-primary mb-2 mt-2" (click)="rechercher()"><img src="../../../../assets/img/ic_search.svg"
-              alt=""></button>
         </form>
-      </div>
-      <div id="map_container">
-        <div #gmap id="map"></div>
-      </div>
+      </div> -->
+      <!-- <div id="map_container">
+        <div id="map"></div>
+      </div> -->
+      <mgl-map [style]="'mapbox://styles/mapbox/streets-v9'" [zoom]="[9]" [center]="[-74.50, 40]">
+        <mgl-marker-cluster
+      [data]="africa"
+      [maxZoom]="14"
+      [radius]="50">
+      <ng-template mglPoint let-feature>
+        Marker!
+      </ng-template>
+      <ng-template mglClusterPoint let-feature>
+        Cluster!
+      </ng-template>
+    </mgl-marker-cluster>
+      </mgl-map>
     </div>
     <div class="col-md-6 p-0">
       <div class="bg-gray p-4 stats">
@@ -35,7 +60,7 @@
           <div class="col-sm-4">
             <div class="montant-des-investissement bg-white mb-4 shadow-2">
               <span class="montant">5290 M$</span>
-              <span class="par-qui">Etat du Sénégal</span>
+              <span class="par-qui">Etat du {{paysSelected}}</span>
             </div>
           </div>
           <div class="col-sm-4">

@@ -16,9 +16,6 @@ export class ListeProjetComponent implements OnInit {
 
   projets: Projet[];
 
-  @ViewChild('gmap') gmapElement: any;
-  map: google.maps.Map;
-
   financementsList = [];
   investisseursList = [];
   paysList = [];
@@ -99,46 +96,6 @@ export class ListeProjetComponent implements OnInit {
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
-
-    const myLatlng = new google.maps.LatLng(1.1379666, 11.9660955, true),
-      mapOptions = {
-        zoom: 3,
-        center: myLatlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-
-    const myLatlng1 = {
-      center: new google.maps.LatLng(1.1379666, 11.9660955, true),
-      zoom: 3,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    const contentString = 'Times Square, Manhattan';
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString,
-      maxWidth: 500
-    });
-
-    const marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map
-    });
-
-    google.maps.event.addListener(marker, 'click', function () {
-      infowindow.open(map, marker);
-    });
-
-    google.maps.event.addDomListener(window, 'resize', function () {
-      const center = map.getCenter();
-      google.maps.event.trigger(map, 'resize');
-      map.setCenter(center);
-    });
-
-
-
-
-    this.map = new google.maps.Map(this.gmapElement.nativeElement, myLatlng1);
   }
 
 }
