@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Projet } from '../models/projet';
+import { SearchProjetDTO } from '../dto/SearchProjetDTO';
 import {environment} from '../../environments/environment';
 
 
@@ -60,6 +61,14 @@ export class ProjetService {
    */
   public delete(id: number): Observable<Projet> {
     return this.http.delete<Projet>(`${environment.apiUrl}/ProjetService/api/projets/` + id);
+  }
+
+    /**
+   * Trouver tous les éléments
+   * @returns obtenir la liste des objets trouvés
+   */
+  searchProjet(dto: SearchProjetDTO): Observable<Projet[]> {
+    return this.http.get<Projet[]>(`${environment.apiUrl}/ProjetService/api/projets/acteur/`+dto.idActeur+'/pays/'+dto.idPays+'/secteur/'+dto.idPays);
   }
 
 }

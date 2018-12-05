@@ -16,7 +16,10 @@ import {
   UpdateProjetError,
   RemoveProjet,
   RemoveProjetSuccess,
-  RemoveProjetError
+  RemoveProjetError,
+  SearchProjet,
+  SearchProjetSuccess,
+  SearchProjetsError
 } from './projets.actions';
 import { Observable, of } from 'rxjs';
 import { ProjetService } from '../../../services/projet.service';
@@ -90,6 +93,19 @@ export class ProjetsEffects {
       )
     )
   );
+
+  @Effect()
+  searchProjets$: Observable<ProjetsActions> = this.actions$
+    .ofType(ProjetsActionTypes.SearchProjets)
+    .map((action: SearchProjet) => action.payload)
+    .pipe(
+      switchMap((dto) => this.projetService.searchProjet(dto)
+        .pipe(
+          map((data) => new SearchProjetSuccess(data)),
+          catchError((err) => of(new SearchProjetsError(err)))
+        )
+      )
+    );
 
   constructor(
     private actions$: Actions,

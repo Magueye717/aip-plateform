@@ -1,9 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, } from 'rxjs';
 import { Projet } from '../../../models/projet';
+import { ProjetService } from '../../../services/projet.service';
+import { SearchProjetDTO } from '../../../dto/SearchProjetDTO';
 import { Store } from '@ngrx/store';
 import { State } from '../config/projets.reducer';
-import { getAllProjets } from '../../../config/reducers';
+import { getAllProjets, searchProjets } from '../../../config/reducers';
+import { SearchProjet } from '../config/projets.actions';
 declare var $: any;
 import * as L from 'leaflet';
 
@@ -34,18 +38,60 @@ export class ListeProjetComponent implements OnInit {
   };
 
   constructor(
-    private store: Store<State>
+    private store: Store<State>,
+    private route: ActivatedRoute,
+    private projetService: ProjetService
   ) {
-    this.store.select(getAllProjets).subscribe((projets) => {
+    /*this.store.select(getAllProjets).subscribe((projets) => {
       if (projets !== null) {
         this.projets = projets;
         console.log(this.projets);
       }
-    });
+    });*/
 
   }
 
   ngOnInit() {
+
+    //////////////
+     this.route.params.subscribe(params => {
+       if(params['idActeur'] && params['idPays'] && params['idSecteur']){
+        console.log("search !!!!!");
+          console.log('params', params);
+          var idActeur = params['idActeur'];
+          var idPays = params['idPays'];
+          var idSecteur = params['idSecteur'];
+          console.log('idActeur',idActeur,'idPays',idPays,'idSecteur',idSecteur);
+          var search: SearchProjetDTO = new SearchProjetDTO();
+          search.idActeur = parseInt(idActeur);
+          search.idSecteur = parseInt(idSecteur);
+          search.idPays = parseInt(idPays);
+          this.searchProjets(search);
+          /*
+            this.store.dispatch(new SearchProjet(search));
+            this.store.select(searchProjets).subscribe((projets) => {
+              if (projets !== null) {
+                this.projets = projets;
+                console.log(this.projets);
+              }
+            });
+          */
+       }
+       else{
+        console.log("GET ALL !!!!!");
+        /*this.store.select(getAllProjets).subscribe((projets) => {
+          if (projets !== null) {
+            this.projets = projets;
+            console.log(this.projets);
+          }
+        });
+        */
+        this.loadAllProjets();
+       }
+      
+    });
+    
+    /////////////
     // list or grid
     (function () {
       /* Variables */
@@ -96,6 +142,34 @@ export class ListeProjetComponent implements OnInit {
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
+  }
+
+
+  searchProjets(dto:SearchProjetDTO){
+    this.projetService.searchProjet(dto).subscribe(
+        response => {
+          console.log('acteurs',response);
+          this.projets = response;
+          
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
+
+
+  loadAllProjets(){
+    this.projetService.listAll().subscribe(
+        response => {
+          console.log('acteurs',response);
+          this.projets = response;
+          
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
 }

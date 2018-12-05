@@ -61,6 +61,15 @@ export const getCreateError = createSelector(getProjetsState, state => state.log
 export const getUpdateError = createSelector(getProjetsState, state => state.logs.type === 'ERROR');
 export const loadProjetsError = createSelector(getProjetsState, state => state.logs.type === 'ERROR');
 export const getProjetError = createSelector(getProjetsState, state =>  state.logs.type === 'ERROR');
+
+//adg
+export const searchProjets = createSelector(getProjetsState, state => {
+  if (state.founded) {
+    return state.data;
+  } else {
+    return null;
+  }
+});
 /**
  * ========================================================================================================
  */

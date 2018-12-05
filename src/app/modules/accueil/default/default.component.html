@@ -2,27 +2,27 @@
   <form>
     <div class="row mb-3 mt-3">
       <div class="col-md-3">
-        <ng-select [items]="financementsList" name="listeFinancements" bindLabel="name" bindValue="id" [multiple]="true"
-          placeholder="Financement(s)">
+        <ng-select [items]="financementsList" name="listeFinancements" bindLabel="name" bindValue="id" 
+          placeholder="Financement(s)" (change)="filtreTypeActeur($event)">
         </ng-select>
       </div>
       <div class="col-md-2">
-        <ng-select [items]="investisseursList" name="listeInvestisseurs" bindLabel="name" bindValue="id" [multiple]="true"
-          placeholder="Investisseur(s)">
+        <ng-select [items]="investisseursList" name="listeInvestisseurs" bindLabel="nomActeur" bindValue="id" 
+          placeholder="Investisseur(s)" (change)="filtreInvestisseur($event)">
         </ng-select>
       </div>
       <div class="col-md-2">
-        <ng-select [items]="paysList" name="listePays" bindLabel="name" bindValue="id" [multiple]="true" placeholder="Pays"
-          >
+        <ng-select [items]="paysList" name="listePays" bindLabel="pays.nomPays" bindValue="id"  placeholder="Pays"
+        (change)="filtrePays($event)" >
         </ng-select>
       </div>
       <div class="col-md-2">
-        <ng-select [items]="secteursList" name="listeSecteurs" bindLabel="name" bindValue="id" [multiple]="true"
-          placeholder="Secteur(s)">
+        <ng-select [items]="secteursList" name="listeSecteurs" bindLabel="libelle" bindValue="id" 
+          placeholder="Secteur(s)" (change)="filtreSecteur($event)">
         </ng-select>
       </div>
       <div class="col-md-2">
-        <ng-select [items]="anneesList" name="listeAnnees" bindLabel="name" bindValue="id" [multiple]="true"
+        <ng-select [items]="anneesList" name="listeAnnees" bindLabel="name" bindValue="id" 
           placeholder="Année" >
         </ng-select>
       </div>

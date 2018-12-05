@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Projet } from '../../../models/projet';
+import { SearchProjetDTO } from '../../../dto/SearchProjetDTO';
 
 export enum ProjetsActionTypes {
   LoadProjets = '[Projets] Load Projets',
@@ -17,7 +18,10 @@ export enum ProjetsActionTypes {
   RemoveProjetError = '[Remove Projet] Remove Projet Error',
   UpdateProjet = '[Update Projet] Update Projet',
   UpdateProjetSuccess = '[Update Projet] Update Projet Success',
-  UpdateProjetError = '[Update Projet] Update Projet Error'
+  UpdateProjetError = '[Update Projet] Update Projet Error',
+  SearchProjets = '[Projets] Search Projets',
+  SearchProjetsSucess = '[Projets] found Projets',
+  SearchProjetsError = '[Projets] Error while searching Projets'
 }
 
 /**
@@ -123,12 +127,32 @@ export class RemoveProjetError implements Action {
   constructor(public payload: HttpErrorResponse) {}
 }
 
+/*adg Rechercher des projets*/
+export class SearchProjet implements Action {
+  readonly type = ProjetsActionTypes.SearchProjets;
+
+  constructor(public payload: SearchProjetDTO) {}
+}
+
+export class SearchProjetSuccess implements Action {
+  readonly type = ProjetsActionTypes.SearchProjetsSucess;
+
+  constructor(public payload: Projet[]) {}
+}
+
+export class SearchProjetsError implements Action {
+  readonly type = ProjetsActionTypes.SearchProjetsError;
+
+  constructor(public payload: HttpErrorResponse) {}
+}
+
 
 
 export type ProjetsActions =
  LoadProjets | LoadProjetsSuccess | LoadProjetsError
  | GetProjet | GetProjetSuccess | GetProjetError
  | AddProjet | AddProjetSuccess | AddProjetError
- | UpdateProjet |UpdateProjetSuccess | UpdateProjetError
+ | UpdateProjet | UpdateProjetSuccess | UpdateProjetError
  | RemoveProjet | RemoveProjetSuccess | RemoveProjetError
+ | SearchProjet | SearchProjetSuccess | SearchProjetsError
  ;

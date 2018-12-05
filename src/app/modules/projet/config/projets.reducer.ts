@@ -6,6 +6,8 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 export interface State {
   loading: boolean;
   loaded: boolean;
+  search: boolean;
+  founded: boolean;
   data: Projet[] | null;
   selected: Projet;
   done: boolean;
@@ -17,7 +19,9 @@ export interface State {
 
 export const initialState: State = {
   loading: false,
+  search: false,
   loaded: false,
+  founded: false,
   data: [],
   selected: null,
   done: false,
@@ -237,6 +241,41 @@ export function reducer(state = initialState, action: ProjetsActions): State {
         message: 'Erreur lors de la suppression du projet' + action.payload
       }
     };
+
+    //adg
+    case ProjetsActionTypes.SearchProjets:
+      return {
+        ...state,
+        search: true,
+        logs: {
+          type: 'SEARCH',
+          message: 'Chargement de tous les projets....'
+        }
+      };
+
+    case ProjetsActionTypes.SearchProjetsSucess:
+      return {
+        ...state,
+        search: false,
+        founded: true,
+        data: action.payload,
+        done: true,
+        logs: {
+          type: 'FOUNDED',
+          message: 'Tous les projets ont été chargés avec succès'
+        }
+      };
+
+    case ProjetsActionTypes.SearchProjetsError:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        logs: {
+          type: 'ERROR',
+          message: 'Error de chargement : ' + action.payload.message
+        }
+      };
 
     default:
       return state;

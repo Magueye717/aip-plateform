@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
+
+import { ActeurFinancement } from '../../../models/ActeurFinancement';
+import { PaysActeur } from '../../../models/PaysActeur';
+import { Pays } from '../../../models/Pays';
+import { Secteur } from '../../../models/Secteur';
+import { ActeurFinancementService } from '../../../services/acteurfinancement.service';
+import { SecteurService } from '../../../services/secteur.service';
 
 import africa from './africa.geo.json';
 import * as L from 'leaflet';
@@ -15,9 +23,12 @@ export class DefaultComponent implements OnInit {
     africa = africa;
 
     financementsList = [];
-    investisseursList = [];
-    paysList = [];
-    secteursList = [];
+    investisseursList : ActeurFinancement[];
+    selectedActeur: ActeurFinancement;
+    paysList : PaysActeur[];
+    selectedPays: Pays;
+    secteursList : Secteur[];
+    selectedSecteur: Secteur;
     anneesList = [];
 
 
@@ -48,7 +59,9 @@ export class DefaultComponent implements OnInit {
 
 
 
-    constructor() { }
+    constructor(private acteurFinancementService: ActeurFinancementService,
+         private secteurService: SecteurService,
+         private router: Router) { }
 
     ngOnInit() {
         this.initMap();
@@ -94,26 +107,28 @@ export class DefaultComponent implements OnInit {
      */
     initListSearching() {
         this.financementsList = [
-            { id: 1, name: 'Etat' },
+            { id: 1, name: 'ETAT' },
             { id: 2, name: 'PTF' },
             { id: 3, name: 'ONG' },
         ];
-        this.investisseursList = [
+        /*this.investisseursList = [
             { id: 1, name: 'Banque Mondiale' },
             { id: 2, name: 'ICF' },
             { id: 3, name: 'USAID' },
-        ];
-        this.paysList = [
+        ];*/
+        /*this.paysList = [
             { id: 1, name: 'Angola' },
             { id: 2, name: 'Burkina' },
             { id: 3, name: 'Mali' },
             { id: 4, name: 'Senegal' },
         ];
+        */
+        /*
         this.secteursList = [
             { id: 1, name: 'Agriculture' },
             { id: 2, name: 'Energie' },
             { id: 3, name: 'Santé' },
-        ];
+        ]; */
         this.anneesList = [
             { id: 1, name: '2016' },
             { id: 2, name: '2017' },
@@ -194,10 +209,70 @@ export class DefaultComponent implements OnInit {
     }
 
     rechercher() {
-        console.log('Iciiiiiiii: ' + JSON.stringify(this.objetRecherche));
+        this.showListeProjets(this.selectedActeur.idActeur, this.selectedPays.idPays, this.selectedSecteur.idSecteur);
     }
     onMapClick(e) {
         console.log('You clicked the map at ' + e.latlng.toString());
     }
+
+    //adg
+
+    showListeProjets(idActeur: number, idPays: number, idSecteur: number) {
+        
+        this.router.navigate(['projets', { idActeur: idActeur, idPays: idPays, idSecteur: idSecteur }]);
+        //alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`)
+      }
+
+    loadActeursByType(type:string){
+        this.acteurFinancementService.findByTypeActeur(type).subscribe(
+            response => {
+              console.log('acteurs',response);
+              this.investisseursList = response;
+              
+            },
+            error => {
+              console.log(error);
+            }
+          );
+    }
+
+    loadSecteurByActeurAndPays(idActeur: number, idPays: number){
+        this.secteurService.findByActeurAndPays(idActeur, idPays).subscribe(
+            response => {
+              console.log('secteurs',response);
+              this.secteursList = response;
+              //this.investisseursList = response;
+              
+            },
+            error => {
+              console.log(error);
+            }
+          );
+    }
+
+    filtreTypeActeur(value: any): void {
+        console.log(value);
+        this.loadActeursByType(value.name);
+      }
+
+    filtreInvestisseur(value: any): void {
+        console.log('investisseur',value);
+        this.selectedActeur = value;
+        this.paysList = value.paysActeurs;
+      }
+    
+      filtrePays(value: any): void {
+        console.log('pays',value);
+        this.selectedPays = value.pays;
+        console.log('Acteur', this.selectedActeur);
+        console.log('Pays', this.selectedPays);
+        this.loadSecteurByActeurAndPays(this.selectedActeur.idActeur, this.selectedPays.idPays);
+      }
+
+      filtreSecteur(value: any): void {
+        console.log('secteur',value);
+        this.selectedSecteur = value;
+      }
+
 
 }
