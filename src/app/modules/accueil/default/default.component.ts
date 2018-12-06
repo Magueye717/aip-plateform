@@ -28,106 +28,13 @@ Highcharts.setOptions({
 export class DefaultComponent implements OnInit {
   MyChart = [];
   Highcharts = Highcharts;
-  dataMap = [
-    ['ug', 0],
-    ['ng', 0],
-    ['st', 0],
-    ['tz', 0],
-    ['sl', 0],
-    ['gw', 0],
-    ['cv', 0],
-    ['sc', 0],
-    ['tn', 0],
-    ['mg', 0],
-    ['ke', 0],
-    ['cd', 0],
-    ['fr', 0],
-    ['mr', 0],
-    ['dz', 0],
-    ['er', 0],
-    ['gq', 0],
-    ['mu', 0],
-    ['sn', 0],
-    ['km', 0],
-    ['et', 0],
-    ['ci', 0],
-    ['gh', 0],
-    ['zm', 0],
-    ['na', 0],
-    ['rw', 0],
-    ['sx', 0],
-    ['so', 0],
-    ['cm', 0],
-    ['cg', 0],
-    ['eh', 0],
-    ['bj', 0],
-    ['bf', 0],
-    ['tg', 0],
-    ['ne', 0],
-    ['ly', 0],
-    ['lr', 0],
-    ['mw', 0],
-    ['gm', 0],
-    ['td', 0],
-    ['ga', 0],
-    ['dj', 0],
-    ['bi', 0],
-    ['ao', 0],
-    ['gn', 0],
-    ['zw', 0],
-    ['za', 0],
-    ['mz', 0],
-    ['sz', 0],
-    ['ml', 0],
-    ['bw', 0],
-    ['sd', 0],
-    ['ma', 0],
-    ['eg', 0],
-    ['ls', 0],
-    ['ss', 0],
-    ['cf', 0]
-  ];
-  paysSelected;
+  chartMap: any;
+  dataMap= [];
+  paysSelected: string = "";
+  
 
   /*  */
-  chartMap = {
-    chart: {
-      map: 'myMapName'
-    },
-    mapNavigation: {
-      enabled: false,
-      buttonOptions: {
-        alignTo: 'spacingBox'
-      }
-    },
-    colorAxis: {
-      min: 0
-    },
-    series: [
-      {
-        name: 'Random data',
-        states: {
-          hover: {
-            color: '#BADA55'
-          }
-        },
-        allAreas: false,
-        data: this.dataMap
-      }
-    ],
-    plotOptions: {
-      series: {
-          point: {
-              events: {
-                  click: function() {
-                      this.paysSelected = this.name;
-                      alert(this.paysSelected);
-                    }
-                }
-            }
-        }
-    },
-  };
+  
 
   /*  */
 
@@ -150,6 +57,114 @@ export class DefaultComponent implements OnInit {
   ngOnInit() {
     this.initListSearching();
     this.initChart();
+    this.initMap();
+  }
+
+  initMap(){
+    this.dataMap = [
+        ['ug', 0],
+        ['ng', 0],
+        ['st', 0],
+        ['tz', 0],
+        ['sl', 0],
+        ['gw', 0],
+        ['cv', 0],
+        ['sc', 0],
+        ['tn', 0],
+        ['mg', 0],
+        ['ke', 0],
+        ['cd', 0],
+        ['fr', 0],
+        ['mr', 0],
+        ['dz', 0],
+        ['er', 0],
+        ['gq', 0],
+        ['mu', 0],
+        ['sn', 0],
+        ['km', 0],
+        ['et', 0],
+        ['ci', 0],
+        ['gh', 0],
+        ['zm', 0],
+        ['na', 0],
+        ['rw', 0],
+        ['sx', 0],
+        ['so', 0],
+        ['cm', 0],
+        ['cg', 0],
+        ['eh', 0],
+        ['bj', 0],
+        ['bf', 0],
+        ['tg', 0],
+        ['ne', 0],
+        ['ly', 0],
+        ['lr', 0],
+        ['mw', 0],
+        ['gm', 0],
+        ['td', 0],
+        ['ga', 0],
+        ['dj', 0],
+        ['bi', 0],
+        ['ao', 0],
+        ['gn', 0],
+        ['zw', 0],
+        ['za', 0],
+        ['mz', 0],
+        ['sz', 0],
+        ['ml', 0],
+        ['bw', 0],
+        ['sd', 0],
+        ['ma', 0],
+        ['eg', 0],
+        ['ls', 0],
+        ['ss', 0],
+        ['cf', 0]
+      ];
+      this.paysSelected;
+       var tt= this;
+
+    this.chartMap = {
+        chart: {
+          map: 'myMapName',
+          instance: {parent:this}
+        },
+        mapNavigation: {
+          enabled: false,
+          buttonOptions: {
+            alignTo: 'spacingBox'
+          }
+        },
+        colorAxis: {
+          min: 0
+        },
+        series: [
+          {
+            name: 'Random data',
+            states: {
+              hover: {
+                color: '#BADA55'
+              }
+            },
+            allAreas: false,
+            data: this.dataMap
+          }
+        ],
+        plotOptions: {
+          series: {
+              point: {
+                  events: {
+                      click: function() {
+                          this.paysSelected = this.name;
+                          console.log("this", this);
+                          console.log('ttt', tt);
+                          tt.consoleFunction();
+                          alert(this.paysSelected);
+                        }
+                    }
+                }
+            }
+        },
+      };
   }
 
   mapLoadedEvent(status: boolean) {
