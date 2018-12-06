@@ -11,6 +11,11 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { EsriMapComponent } from './esri-map/esri-map.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { CountriesMapModule } from 'countries-map';
+import { HighchartsChartModule } from 'highcharts-angular';
+
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -36,11 +41,15 @@ export function HttpLoaderFactory(http: HttpClient) {
   NgxMapboxGLModule.withConfig({
     accessToken: 'pk.eyJ1IjoicGFwYW91c21hbmUiLCJhIjoiY2pvMDN5MHlsMDYwdjNwcGJlYmJxajI5OCJ9.OmLCeU1G-rS8UB_YTRI59w',
     geocoderAccessToken: 'pk.eyJ1IjoicGFwYW91c21hbmUiLCJhIjoiY2pvMDN5MHlsMDYwdjNwcGJlYmJxajI5OCJ9.OmLCeU1G-rS8UB_YTRI59w'
-  })
+  }),
+  GoogleChartsModule.forRoot('AIzaSyCz9zg30tKjU9TVrClw38S_6x1z0Bu4XwA'),
+  CountriesMapModule,
+  HighchartsChartModule
   ],
   declarations: [
     AccueilComponent,
-    DefaultComponent
+    DefaultComponent,
+    EsriMapComponent
   ]
 })
 export class AccueilModule { }
