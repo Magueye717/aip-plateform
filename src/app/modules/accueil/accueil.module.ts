@@ -11,7 +11,6 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
-import { EsriMapComponent } from './esri-map/esri-map.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { CountriesMapModule } from 'countries-map';
 import { HighchartsChartModule } from 'highcharts-angular';
@@ -48,8 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   declarations: [
     AccueilComponent,
-    DefaultComponent,
-    EsriMapComponent
+    DefaultComponent
   ]
 })
 export class AccueilModule { }
