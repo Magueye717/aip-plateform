@@ -38,7 +38,8 @@
         </form>
       </div> -->
       <div id="map_container">
-        <div id="map"></div>
+        <highcharts-chart [Highcharts]="Highcharts" [constructorType]="'mapChart'" [options]="chartMap" style="width: 100%; height: 100%; display: block;">
+        </highcharts-chart>
       </div>
     </div>
     <div class="col-md-6 p-0">
@@ -47,7 +48,7 @@
           <div class="col-sm-4">
             <div class="montant-des-investissement bg-white mb-4 shadow-2">
               <span class="montant">5290 M$</span>
-              <span class="par-qui">Etat du Sénégal</span>
+              <span class="par-qui">Etat du {{paysSelected}}</span>
             </div>
           </div>
           <div class="col-sm-4">

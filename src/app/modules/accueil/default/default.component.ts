@@ -1,28 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Chart } from 'chart.js';
+declare var require: any;
 
+import { Component, OnInit } from '@angular/core';
+import { Chart } from 'chart.js';
+import { Router } from '@angular/router';
 import { ActeurFinancement } from '../../../models/ActeurFinancement';
 import { PaysActeur } from '../../../models/PaysActeur';
 import { Pays } from '../../../models/Pays';
 import { Secteur } from '../../../models/Secteur';
+
 import { ActeurFinancementService } from '../../../services/acteurfinancement.service';
 import { SecteurService } from '../../../services/secteur.service';
 
-import africa from './africa.geo.json';
-import * as L from 'leaflet';
-import * as LM from 'leaflet.markercluster';
+
+import * as Highcharts from 'highcharts/highstock';
+const HC_map = require('highcharts/modules/map');
+const HC_exporting = require('highcharts/modules/exporting');
+
+HC_map(Highcharts);
+require('./geojson/africa')(Highcharts);
+
+HC_exporting(Highcharts);
+
+Highcharts.setOptions({
+  title: {
+    style: {
+      color: 'orange'
+    }
+  }
+});
 
 @Component({
-    selector: 'app-default',
-    templateUrl: './default.component.html',
-    styleUrls: ['./default.component.css']
+  selector: 'app-default',
+  templateUrl: './default.component.html',
+  styleUrls: ['./default.component.css']
 })
 export class DefaultComponent implements OnInit {
-    MyChart = [];
-    africa = africa;
-
-    financementsList = [];
+  MyChart = [];
+  Highcharts = Highcharts;
+  chartMap: any;
+  dataMap= [];
+  paysSelected: string = "";
+  financementsList = [];
     investisseursList : ActeurFinancement[];
     selectedActeur: ActeurFinancement;
     paysList : PaysActeur[];
@@ -30,79 +48,143 @@ export class DefaultComponent implements OnInit {
     secteursList : Secteur[];
     selectedSecteur: Secteur;
     anneesList = [];
+ 
 
+  objetRecherche = {
+    typesfinancement: [],
+    investisseurs: [],
+    pays: [],
+    secteurs: [],
+    annees: []
+  };
 
-
-    objetRecherche = {
-        typesfinancement: [],
-        investisseurs: [],
-        pays: [],
-        secteurs: [],
-        annees: []
-    };
-
-    featureLayer = new L.GeoJSON();
-    defaultStyle = {
-        color: '#2262CC',
-        weight: 2,
-        opacity: 0.6,
-        fillOpacity: 0.1,
-        fillColor: '#2262CC'
-    };
-    highlightStyle = {
-        color: '#2262CC',
-        weight: 3,
-        opacity: 0.6,
-        fillOpacity: 0.65,
-        fillColor: '#2262CC'
-    };
-
-
-
-    constructor(private acteurFinancementService: ActeurFinancementService,
+  constructor(private acteurFinancementService: ActeurFinancementService,
          private secteurService: SecteurService,
          private router: Router) { }
 
-    ngOnInit() {
-        this.initMap();
-        this.initListSearching();
-        this.initChart();
-    }
+  ngOnInit() {
+    this.initListSearching();
+    this.initChart();
+    this.initMap();
+  }
 
-    /**
-     * Init Map
-     */
-    initMap() {
-        const map = L.map('map', {
-            scrollWheelZoom: false,
-            touchZoom: false,
-            doubleClickZoom: false,
-        }).setView([2.0000003, 15.9999997], 3.5);
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
-                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,' +
-                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
-            id: 'mapbox.streets',
-            accessToken: 'pk.eyJ1IjoicGFwYW91c21hbmUiLCJhIjoiY2pvMDN5MHlsMDYwdjNwcGJlYmJxajI5OCJ9.OmLCeU1G-rS8UB_YTRI59w'
-        }).addTo(map);
-        const geojsonMarkerOptions = {
-            radius: 8,
-            fillColor: '#ff7800',
-            color: '#000',
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-        };
-        L.geoJSON(africa).addTo(map);
-        this.featureLayer = L.geoJSON(africa, {
-            onEachFeature: this.onEachFeature
-        });
-        map.addLayer(this.featureLayer);
+  initMap(){
+    this.dataMap = [
+        ['ug', 0],
+        ['ng', 0],
+        ['st', 0],
+        ['tz', 0],
+        ['sl', 0],
+        ['gw', 0],
+        ['cv', 0],
+        ['sc', 0],
+        ['tn', 0],
+        ['mg', 0],
+        ['ke', 0],
+        ['cd', 0],
+        ['fr', 0],
+        ['mr', 0],
+        ['dz', 0],
+        ['er', 0],
+        ['gq', 0],
+        ['mu', 0],
+        ['sn', 0],
+        ['km', 0],
+        ['et', 0],
+        ['ci', 0],
+        ['gh', 0],
+        ['zm', 0],
+        ['na', 0],
+        ['rw', 0],
+        ['sx', 0],
+        ['so', 0],
+        ['cm', 0],
+        ['cg', 0],
+        ['eh', 0],
+        ['bj', 0],
+        ['bf', 0],
+        ['tg', 0],
+        ['ne', 0],
+        ['ly', 0],
+        ['lr', 0],
+        ['mw', 0],
+        ['gm', 0],
+        ['td', 0],
+        ['ga', 0],
+        ['dj', 0],
+        ['bi', 0],
+        ['ao', 0],
+        ['gn', 0],
+        ['zw', 0],
+        ['za', 0],
+        ['mz', 0],
+        ['sz', 0],
+        ['ml', 0],
+        ['bw', 0],
+        ['sd', 0],
+        ['ma', 0],
+        ['eg', 0],
+        ['ls', 0],
+        ['ss', 0],
+        ['cf', 0]
+      ];
+      this.paysSelected;
+       var tt= this;
 
-    }
+    this.chartMap = {
+        chart: {
+          map: 'myMapName',
+          instance: {parent:this}
+        },
+        mapNavigation: {
+          enabled: false,
+          buttonOptions: {
+            alignTo: 'spacingBox'
+          }
+        },
+        colorAxis: {
+          min: 0
+        },
+        series: [
+          {
+            name: 'Random data',
+            states: {
+              hover: {
+                color: '#BADA55'
+              }
+            },
+            allAreas: false,
+            data: this.dataMap
+          }
+        ],
+        plotOptions: {
+          series: {
+              point: {
+                  events: {
+                      click: function() {
+                          this.paysSelected = this.name;
+                          console.log("this", this);
+                          console.log('ttt', tt);
+                          tt.consoleFunction();
+                          alert(this.paysSelected);
+                        }
+                    }
+                }
+            }
+        },
+      };
+  }
 
-    /**
+  mapLoadedEvent(status: boolean) {
+    console.log('The map has loaded: ' + status);
+  }
+
+  consoleFunction() {
+    console.log('Hello');
+  }
+
+
+  /**
      * list of choice for multiselecting search
      */
     initListSearching() {
@@ -136,79 +218,37 @@ export class DefaultComponent implements OnInit {
         ];
     }
 
-    /**
-     * Chart initilisation
-     */
-    initChart() {
-        this.MyChart = new Chart('myChart', {
-            type: 'pie',
-            data: {
-                labels: [
-                    'Banque mondiale',
-                    'ICF',
-                    'USAID',
-                    'Nations Unies',
-                    'BAD'
-                ],
-                datasets: [{
-                    data: [250, 50, 100, 120, 90],
-                    backgroundColor: [
-                        '#FF6384',
-                        '#36A2EB',
-                        '#FFCE56',
-                        '#44c7a2',
-                        '#cc65fe'
-                    ]
-                }]
-            },
-            options: {
-                legend: {
-                    display: true,
-                    position: 'right'
-                }
-            }
-        });
-    }
+  /**
+   * Chart initilisation
+   */
+  initChart() {
+    this.MyChart = new Chart('myChart', {
+      type: 'pie',
+      data: {
+        labels: ['Banque mondiale', 'ICF', 'USAID', 'Nations Unies', 'BAD'],
+        datasets: [
+          {
+            data: [250, 50, 100, 120, 90],
+            backgroundColor: [
+              '#FF6384',
+              '#36A2EB',
+              '#FFCE56',
+              '#44c7a2',
+              '#cc65fe'
+            ]
+          }
+        ]
+      },
+      options: {
+        legend: {
+          display: true,
+          position: 'right'
+        }
+      }
+    });
+  }
 
-    /**
-     * features.length
-     */
-    onEachFeature(feature, layer) {
-        layer.setStyle(this.defaultStyle);
-        (function (layer, properties) {
-            layer.on('mouseover', function (e) {
-                layer.setStyle(this.highlightStyle);
-                const popup = $('<div></div>', {
-                    id: 'popup-' + properties.cartodb_id,
-                    css: {
-                        position: 'absolute',
-                        bottom: '85px',
-                        left: '50px',
-                        zIndex: 1002,
-                        backgroundColor: 'white',
-                        padding: '8px',
-                        border: '1px solid #ccc'
-                    }
-                });
-                const hed = $('<div></div>', {
-                    text: properties.name,
-                    css: { fontSize: '16px', marginBottom: '3px' }
-                }).appendTo(popup);
-                popup.appendTo('#map');
-            });
-            layer.on('mouseout', function (e) {
-                layer.setStyle(this.defaultStyle);
-                $('#popup-' + properties.cartodb_id).remove();
-            });
-
-            layer.on('click', function (e) {
-                this.paysSelected = properties.name;
-                console.log(this.paysSelected);
-            });
-        })(layer, feature.properties);
-    }
-
-    rechercher() {
+  rechercher() {
         this.showListeProjets(this.selectedActeur.idActeur, this.selectedPays.idPays, this.selectedSecteur.idSecteur);
     }
     onMapClick(e) {
@@ -273,6 +313,4 @@ export class DefaultComponent implements OnInit {
         console.log('secteur',value);
         this.selectedSecteur = value;
       }
-
-
 }

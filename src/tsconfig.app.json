@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "types": [
-      "leaflet"
+      "leaflet",
+      "arcgis-js-api"
     ]
   },
   "exclude": [
