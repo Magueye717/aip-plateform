@@ -68,7 +68,7 @@ export class ProjetService {
    * @returns obtenir la liste des objets trouvés
    */
   searchProjet(dto: SearchProjetDTO): Observable<Projet[]> {
-    return this.http.get<Projet[]>(`${environment.apiUrl}/ProjetService/api/projets/acteur/`+dto.idActeur+'/pays/'+dto.idPays+'/secteur/'+dto.idPays);
+    return this.http.get<Projet[]>(`${environment.apiUrl}/ProjetService/api/projets/acteur/`+dto.idActeur+'/pays/'+dto.codePays+'/secteur/'+dto.idSecteur);
   }
 
 }

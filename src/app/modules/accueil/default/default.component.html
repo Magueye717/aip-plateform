@@ -2,7 +2,7 @@
   <form>
     <div class="row mb-3 mt-3">
       <div class="col-md-3">
-        <ng-select [items]="financementsList" name="listeFinancements" bindLabel="name" bindValue="id" 
+        <ng-select [items]="financementsList" [(ngModel)]="typeFinancement" name="listeFinancements" bindLabel="name" bindValue="id" 
           placeholder="Financement(s)" (change)="filtreTypeActeur($event)">
         </ng-select>
       </div>
@@ -12,7 +12,7 @@
         </ng-select>
       </div>
       <div class="col-md-2">
-        <ng-select [items]="paysList" name="listePays" bindLabel="pays.nomPays" bindValue="id"  placeholder="Pays"
+        <ng-select [items]="paysList" [(ngModel)]="selectedIdPays" name="listePays" bindLabel="nomPays" bindValue="idPays"  placeholder="Pays"
         (change)="filtrePays($event)" >
         </ng-select>
       </div>
@@ -94,58 +94,18 @@
                   </select>
                 </label>
               </div>
-              <div class="box-body">
-                <div class="barres-progression mb-3">
-                  <p class="mb-1 d-flex">
-                    <span class="text-uppercase">AGRICULTURE</span>
-                    <span class="ml-auto">$829910 M$</span>
-                  </p>
-                  <div class="progress progress-min mb-3">
-                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="82" aria-valuemin="82"
-                      aria-valuemax="100" style="width:82%"></div>
-                  </div>
+               <div class="box-body">
+                  <div *ngFor="let favoris of secteursFavorisList" class="barres-progression mb-3">
+                      <p class="mb-1 d-flex">
+                        <span class="text-uppercase">{{favoris.secteur.libelle}}</span>
+                        <span class="ml-auto">{{favoris.nombre}}</span>
+                      </p>
+                      <div class="progress progress-min mb-3">
+                        <div [ngClass]="['progress-bar', favoris.secteur.couleur]" role="progressbar" aria-valuenow="favoris.nombre" aria-valuemin="favoris.nombre"
+                          aria-valuemax="100"  [ngStyle]="{'width.%': favoris.nombre}" ></div>
+                      </div>
+                    </div>
                 </div>
-                <div class="barres-progression mb-3">
-                  <p class="mb-1 d-flex">
-                    <span class="text-uppercase">santé</span>
-                    <span class="ml-auto">$793792 M$</span>
-                  </p>
-                  <div class="progress progress-min mb-3">
-                    <div class="progress-bar bg-mauve" role="progressbar" aria-valuenow="75" aria-valuemin="75"
-                      aria-valuemax="100" style="width:75%"></div>
-                  </div>
-                </div>
-                <div class="barres-progression mb-3">
-                  <p class="mb-1 d-flex">
-                    <span class="text-uppercase">Energie</span>
-                    <span class="ml-auto">$528602 M$</span>
-                  </p>
-                  <div class="progress progress-min mb-3">
-                    <div class="progress-bar bg-red" role="progressbar" aria-valuenow="65" aria-valuemin="65"
-                      aria-valuemax="100" style="width:65%"></div>
-                  </div>
-                </div>
-                <div class="barres-progression mb-3">
-                  <p class="mb-1 d-flex">
-                    <span class="text-uppercase">Social</span>
-                    <span class="ml-auto">$498321 M$</span>
-                  </p>
-                  <div class="progress progress-min mb-3">
-                    <div class="progress-bar bg-yellow" role="progressbar" aria-valuenow="47" aria-valuemin="47"
-                      aria-valuemax="100" style="width:47%"></div>
-                  </div>
-                </div>
-                <div class="barres-progression mb-3">
-                  <p class="mb-1 d-flex">
-                    <span class="text-uppercase">Transport</span>
-                    <span class="ml-auto">$390500 M$</span>
-                  </p>
-                  <div class="progress progress-min mb-3">
-                    <div class="progress-bar bg-aqua" role="progressbar" aria-valuenow="35" aria-valuemin="35"
-                      aria-valuemax="100" style="width:35%"></div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

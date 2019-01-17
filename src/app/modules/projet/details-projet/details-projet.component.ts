@@ -6,6 +6,7 @@ import { State } from '../config/projets.reducer';
 import { Projet } from '../../../models/projet';
 import { getProjet, getIsLoading } from '../../../config/reducers';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { UploadService } from '../../../services/upload.service';
 
 
 @Component({
@@ -58,6 +59,7 @@ export class DetailsProjetComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private store: Store<State>,
+    private uploadService: UploadService
   ) {
     this.route.params.subscribe(params => {
       this.store.dispatch(new GetProjet(+params['id']));
@@ -65,7 +67,7 @@ export class DetailsProjetComponent implements OnInit {
 
     this.store.select(getProjet).subscribe((projet) => {
       if (projet !== null) {
-        this.initialize();
+        //this.initialize();
         this.projetSelected = projet;
         console.log(this.projetSelected);
 
@@ -106,6 +108,16 @@ export class DetailsProjetComponent implements OnInit {
       documents: [],
       financements: []
     };
+  }
+
+
+  getImageUrl(url: string){
+    if(url){
+      return this.uploadService.getLink(url);
+    }else{
+      return 'assets/img/default.png';
+    }
+    
   }
 
 }

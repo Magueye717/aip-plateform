@@ -1,5 +1,5 @@
 export class SearchProjetDTO {
-    idPays: number;
+    codePays: string;
     idActeur: number;
     idSecteur: number;
 }

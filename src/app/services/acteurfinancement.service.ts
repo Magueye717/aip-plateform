@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActeurFinancement } from '../models/ActeurFinancement';
+import { ActeurFavoris } from '../dto/ActeurFavoris';
 import {environment} from '../../environments/environment';
 
 
@@ -33,6 +34,14 @@ export class ActeurFinancementService {
     return this.http.get<ActeurFinancement[]>(this.apiUrl+'/type/'+type);
   }
 
+  findByIdActeur(idActeur: number): Observable<ActeurFinancement> {
+    return this.http.get<ActeurFinancement>(this.apiUrl+'/'+idActeur);
+  }
+
+  findFavoris(codePays: string): Observable<ActeurFavoris[]> {
+    var top = 5;
+    return this.http.get<ActeurFavoris[]>(this.apiUrl+'/favoris/'+top+'/'+codePays);
+  }
   
 
 }

@@ -1,4 +1,37 @@
 <div class="container-fluid m-0 w-100">
+    <form>
+        <div class="row mb-3 mt-3">
+          <div class="col-md-3">
+            <ng-select [items]="financementsList" [(ngModel)]="typeFinancement" name="listeFinancements" bindLabel="name" bindValue="id" 
+              placeholder="Financement(s)" (change)="filtreTypeActeur($event)">
+            </ng-select>
+          </div>
+          <div class="col-md-2">
+            <ng-select [items]="investisseursList" [(ngModel)]="selectedIdActeur" name="listeInvestisseurs" bindLabel="nomActeur" bindValue="idActeur" 
+              placeholder="Investisseur(s)" (change)="filtreInvestisseur($event)">
+            </ng-select>
+          </div>
+          <div class="col-md-2">
+            <ng-select [items]="paysList" [(ngModel)]="selectedIdPays" name="listePays" bindLabel="nomPays" bindValue="idPays"  placeholder="Pays"
+            (change)="filtrePays($event)" >
+            </ng-select>
+          </div>
+          <div class="col-md-2">
+            <ng-select [items]="secteursList" name="listeSecteurs" bindLabel="libelle" bindValue="id" 
+              placeholder="Secteur(s)" (change)="filtreSecteur($event)">
+            </ng-select>
+          </div>
+          <div class="col-md-2">
+            <ng-select [items]="anneesList" name="listeAnnees" bindLabel="name" bindValue="id" 
+              placeholder="Année" >
+            </ng-select>
+          </div>
+          <div class="col-md-1">
+            <button type="submit" class="btn btn-primary" (click)="rechercher()"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </form>
+      
   <div class="row">
     <div class="col-md-6 p-0" id="carte">
       <div class="filtres position-relative">
@@ -7,7 +40,8 @@
         </form> -->
       </div>
       <div id="map_container">
-        <div id="fmap"></div>
+        <highcharts-chart [Highcharts]="Highcharts" [constructorType]="'mapChart'" [options]="chartMap" style="width: 100%; height: 100%; display: block;">
+        </highcharts-chart>
       </div>
     </div>
     <div class="col-md-6 p-0" id="liste">

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { ProjetRoutingModule } from './projet-routing.module';
 import { DetailsProjetComponent } from './details-projet/details-projet.component';
@@ -15,6 +16,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FormsModule } from '@angular/forms';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -25,6 +27,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CommonModule,
     HttpClientModule,
     FormsModule,
+    NgSelectModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
@@ -36,7 +39,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     EffectsModule.forFeature([ProjetsEffects]),
     NgxSpinnerModule,
     NgMultiSelectDropDownModule.forRoot(),
-    LeafletModule
+    LeafletModule,
+    HighchartsChartModule
   ],
   declarations: [
     DetailsProjetComponent,

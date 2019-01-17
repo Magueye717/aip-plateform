@@ -194,14 +194,14 @@
       <div class="investisseurs mb-4">
         <h2>INVESTISSEURS :</h2>
         <div class="row">
-          <div class="col-sm-4 col-12 col-md-4 px-2 mb-3" *ngFor="let acteur of projetSelected.financements">
+          <div class="col-sm-4 col-12 col-md-4 px-2 mb-3" *ngFor="let financement of projetSelected.financements">
             <div class="un-ivestisseur shadow-2">
               <div class="d-flex">
-                <img src={{acteur.acteurFinancement.urlLogo}} alt="">
-                <span class="nom-inv">{{acteur.acteurFinancement.nomActeur}}</span>
+                <img [src]="getImageUrl(financement.acteurFinancement.urlLogo)" alt="">
+                <span class="nom-inv">{{financement.acteurFinancement.nomActeur}}</span>
               </div>
               <p class="mb-0">
-                <span class="montant">{{acteur.montant}}&nbsp;{{acteur.devise}}</span> soit <span class="montant-pct">45%</span>
+                <span class="montant">{{financement.montant}}&nbsp;{{financement.devise}}</span> soit <span class="montant-pct">45%</span>
               </p>
             </div>
 

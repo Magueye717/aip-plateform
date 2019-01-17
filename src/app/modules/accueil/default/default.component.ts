@@ -7,17 +7,21 @@ import { ActeurFinancement } from '../../../models/ActeurFinancement';
 import { PaysActeur } from '../../../models/PaysActeur';
 import { Pays } from '../../../models/Pays';
 import { Secteur } from '../../../models/Secteur';
+import { ActeurFavoris } from '../../../dto/ActeurFavoris';
+import { SecteurFavoris } from '../../../dto/SecteurFavoris';
 
 import { ActeurFinancementService } from '../../../services/acteurfinancement.service';
 import { SecteurService } from '../../../services/secteur.service';
+import { PaysService } from '../../../services/pays.service';
 
 
 import * as Highcharts from 'highcharts/highstock';
+import Json from '*.json';
 const HC_map = require('highcharts/modules/map');
 const HC_exporting = require('highcharts/modules/exporting');
 
 HC_map(Highcharts);
-require('./geojson/africa')(Highcharts);
+require('../../../config/geojson/africa')(Highcharts);
 
 HC_exporting(Highcharts);
 
@@ -37,15 +41,23 @@ Highcharts.setOptions({
 export class DefaultComponent implements OnInit {
   MyChart = [];
   Highcharts = Highcharts;
+  mapChart: any;
+  typeFinancement: string= "";
+  mapInstance: any;
   chartMap: any;
   dataMap= [];
   paysSelected: string = "";
+  selectedCodePays: string = "";
   financementsList = [];
     investisseursList : ActeurFinancement[];
     selectedActeur: ActeurFinancement;
-    paysList : PaysActeur[];
+    paysList : Pays[];
     selectedPays: Pays;
+    selectedIdPays: number;
+    selectedIdPaysActeur: number;
     secteursList : Secteur[];
+    secteursFavorisList : SecteurFavoris[];
+    investisseursFavorisList : ActeurFavoris[];
     selectedSecteur: Secteur;
     anneesList = [];
  
@@ -60,12 +72,15 @@ export class DefaultComponent implements OnInit {
 
   constructor(private acteurFinancementService: ActeurFinancementService,
          private secteurService: SecteurService,
+         private paysService: PaysService,
          private router: Router) { }
 
   ngOnInit() {
     this.initListSearching();
-    this.initChart();
+    //this.initChart();
     this.initMap();
+    this.loadInvestisseursFavoris("vide");
+    this.loadSecteurFavoris();
   }
 
   initMap(){
@@ -134,10 +149,16 @@ export class DefaultComponent implements OnInit {
     this.chartMap = {
         chart: {
           map: 'myMapName',
-          instance: {parent:this}
+          instance: {parent:this},
+          events: {
+            load: function (event) {
+              console.log('loaded!!!!!!!', event);
+              tt.mapInstance = event.target;
+            }
+          }
         },
         mapNavigation: {
-          enabled: false,
+          enabled: true,
           buttonOptions: {
             alignTo: 'spacingBox'
           }
@@ -151,23 +172,45 @@ export class DefaultComponent implements OnInit {
             states: {
               hover: {
                 color: '#BADA55'
-              }
+              },
+              select: {
+                color: '#EFFFEF',
+                borderColor: 'black',
+                dashStyle: 'dot'
+            }
             },
             allAreas: false,
-            data: this.dataMap
+            data: this.dataMap,
+            allowPointSelect: true,
+            cursor: 'pointer'
           }
         ],
         plotOptions: {
           series: {
               point: {
                   events: {
-                      click: function() {
+                      click: function(e) {
+                        e.point.zoomTo();
                           this.paysSelected = this.name;
                           console.log("this", this);
                           console.log('ttt', tt);
-                          tt.consoleFunction();
-                          alert(this.paysSelected);
-                        }
+                          tt.paysSelected = this.name;
+                          tt.selectedCodePays = this['hc-key'];
+                          tt.changePaysFromCarte();
+                        
+                        },
+                        select: function () {
+                          var text = 'Selected ' + this.name + ' (' + this.value + '/km²)',
+                              chart = this.series.chart;
+                          if (!chart.selectedLabel) {
+                              chart.selectedLabel = chart.renderer.label(text, 0, 320)
+                                  .add();
+                          } else {
+                              chart.selectedLabel.attr({
+                                  text: text
+                              });
+                          }
+                      }
                     }
                 }
             }
@@ -183,34 +226,50 @@ export class DefaultComponent implements OnInit {
     console.log('Hello');
   }
 
+  changePaysFromCarte(){
+    console.log('Pays', this.paysSelected, 'code', this.selectedCodePays);
+    this.paysService.findByCode(this.selectedCodePays).subscribe(
+      response => {
+        console.log('pays++',response);
+        this.selectedPays = response;
+        this.paysList = new Array();
+        this.paysList=[this.selectedPays];
+        this.selectedIdPays = this.selectedPays.idPays;
+        console.log('this.payslist', this.paysList);
+        console.log('this.selectedPaysActeur', this.selectedIdPaysActeur);
+        console.log('this.selectedActeur', this.selectedActeur);
+        console.log('this.selectedPays', this.selectedPays);
+        var idActeur = 0;
+        this.loadSecteurByActeurAndPays(idActeur, this.selectedPays.codePays);
+        this.loadInvestisseursFavoris(this.selectedPays.codePays);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+
+  loadPaysByIdActeur(idActeur){
+    this.paysService.findByIdActeur(idActeur).subscribe(
+      response => {
+        console.log('list pays++',response);
+        this.paysList = response;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
 
   /**
      * list of choice for multiselecting search
      */
     initListSearching() {
-        this.financementsList = [
-            { id: 1, name: 'ETAT' },
-            { id: 2, name: 'PTF' },
-            { id: 3, name: 'ONG' },
-        ];
-        /*this.investisseursList = [
-            { id: 1, name: 'Banque Mondiale' },
-            { id: 2, name: 'ICF' },
-            { id: 3, name: 'USAID' },
-        ];*/
-        /*this.paysList = [
-            { id: 1, name: 'Angola' },
-            { id: 2, name: 'Burkina' },
-            { id: 3, name: 'Mali' },
-            { id: 4, name: 'Senegal' },
-        ];
-        */
-        /*
-        this.secteursList = [
-            { id: 1, name: 'Agriculture' },
-            { id: 2, name: 'Energie' },
-            { id: 3, name: 'Santé' },
-        ]; */
+      this.financementsList = [
+        { id: 0, name: 'PTF' }
+    ];
         this.anneesList = [
             { id: 1, name: '2016' },
             { id: 2, name: '2017' },
@@ -221,14 +280,14 @@ export class DefaultComponent implements OnInit {
   /**
    * Chart initilisation
    */
-  initChart() {
+  initChart(labels: any, data: any) {
     this.MyChart = new Chart('myChart', {
       type: 'pie',
       data: {
-        labels: ['Banque mondiale', 'ICF', 'USAID', 'Nations Unies', 'BAD'],
+        labels: labels,
         datasets: [
           {
-            data: [250, 50, 100, 120, 90],
+            data: data,
             backgroundColor: [
               '#FF6384',
               '#36A2EB',
@@ -249,7 +308,19 @@ export class DefaultComponent implements OnInit {
   }
 
   rechercher() {
-        this.showListeProjets(this.selectedActeur.idActeur, this.selectedPays.idPays, this.selectedSecteur.idSecteur);
+    var idActeur = 0;
+    if(this.selectedActeur){
+      idActeur = this.selectedActeur.idActeur;
+    }
+    var codePays = "";
+    if(this.selectedPays){
+      codePays = this.selectedPays.codePays;
+    }
+    var idSecteur = 0;
+    if(this.selectedSecteur){
+      idSecteur = this.selectedSecteur.idSecteur;
+    }
+        this.showListeProjets(idActeur, codePays, idSecteur, this.typeFinancement);
     }
     onMapClick(e) {
         console.log('You clicked the map at ' + e.latlng.toString());
@@ -257,9 +328,9 @@ export class DefaultComponent implements OnInit {
 
     //adg
 
-    showListeProjets(idActeur: number, idPays: number, idSecteur: number) {
+    showListeProjets(idActeur: number, codePays: string, idSecteur: number, typeFinancement: string) {
         
-        this.router.navigate(['projets', { idActeur: idActeur, idPays: idPays, idSecteur: idSecteur }]);
+        this.router.navigate(['projets', { type: typeFinancement, idActeur: idActeur, codePays: codePays, idSecteur: idSecteur }]);
         //alert(`Custom event '${event.action}' fired on row №: ${event.data.id}`)
       }
 
@@ -276,8 +347,8 @@ export class DefaultComponent implements OnInit {
           );
     }
 
-    loadSecteurByActeurAndPays(idActeur: number, idPays: number){
-        this.secteurService.findByActeurAndPays(idActeur, idPays).subscribe(
+    loadSecteurByActeurAndPays(idActeur: number, codePays: string){
+        this.secteurService.findByActeurAndPays(idActeur, codePays).subscribe(
             response => {
               console.log('secteurs',response);
               this.secteursList = response;
@@ -292,25 +363,70 @@ export class DefaultComponent implements OnInit {
 
     filtreTypeActeur(value: any): void {
         console.log(value);
+        this.selectedIdPaysActeur = 0;
         this.loadActeursByType(value.name);
       }
 
     filtreInvestisseur(value: any): void {
         console.log('investisseur',value);
         this.selectedActeur = value;
-        this.paysList = value.paysActeurs;
+        this.selectedIdPaysActeur = 0;
+        //this.paysList = value.paysActeurs;
+        this.loadPaysByIdActeur(this.selectedActeur.idActeur);
       }
     
       filtrePays(value: any): void {
         console.log('pays',value);
-        this.selectedPays = value.pays;
+        this.selectedPays = value;
         console.log('Acteur', this.selectedActeur);
         console.log('Pays', this.selectedPays);
-        this.loadSecteurByActeurAndPays(this.selectedActeur.idActeur, this.selectedPays.idPays);
+        console.log('selectedPaysActeur',this.selectedIdPaysActeur);
+        console.log('map : ',this.mapInstance);
+        var point = this.mapInstance.pointer.chart.get('sn');
+    
+        console.log('point', point);
+       
+        this.loadSecteurByActeurAndPays(this.selectedActeur.idActeur, this.selectedPays.codePays);
       }
 
       filtreSecteur(value: any): void {
         console.log('secteur',value);
         this.selectedSecteur = value;
       }
+
+
+      loadSecteurFavoris(){
+        this.secteurService.findSecteursFavoris().subscribe(
+            response => {
+              console.log('secteurs favoris',response);
+              this.secteursFavorisList = response;
+              //this.investisseursList = response;
+              
+            },
+            error => {
+              console.log(error);
+            }
+          );
+    }
+
+
+    loadInvestisseursFavoris(codePays: string){
+      this.acteurFinancementService.findFavoris(codePays).subscribe(
+          response => {
+            console.log('investisseurs favoris',response);
+            this.investisseursFavorisList = response;
+            let lables = [];
+            let datas = [];
+            for(var value of response){
+                console.log('value', value);
+                lables.push(value.acteur.nomActeur);
+                datas.push(value.montant);
+            }
+            this.initChart(lables, datas); 
+          },
+          error => {
+            console.log(error);
+          }
+        );
+  }
 }
