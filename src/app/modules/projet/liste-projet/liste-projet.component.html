@@ -76,7 +76,7 @@
               <div class="un-projet" *ngFor="let projet of projets">
                 <div class="projet-inner clearfix">
                   <div class="projet-image">
-                    <img src="assets/img/gal1.jpg" alt="">
+                    <img [src]="getImageUrl(projet.image)" alt="">
                     <div class="pays-date small-3">
                       <span><i class="fa fa-map-marker"></i> Sénégal</span>
                       <span class="date"><i class="fa fa-calendar"></i> {{projet.dateApprobation | date :

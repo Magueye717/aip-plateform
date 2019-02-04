@@ -18,6 +18,7 @@ import { PaysActeur } from '../../../models/PaysActeur';
 import { ActeurFinancementService } from '../../../services/acteurfinancement.service';
 import { SecteurService } from '../../../services/secteur.service';
 import { PaysService } from '../../../services/pays.service';
+import { UploadService } from '../../../services/upload.service';
 
 import * as Highcharts from 'highcharts/highstock';
 import Json from '*.json';
@@ -82,6 +83,7 @@ export class ListeProjetComponent implements OnInit {
     private acteurFinancementService: ActeurFinancementService,
     private secteurService: SecteurService,
     private paysService: PaysService,
+    private uploadService: UploadService
   ) {
   }
 
@@ -216,8 +218,11 @@ findActeurById(idActeur: number){
   this.acteurFinancementService.findByIdActeur(idActeur).subscribe(
     response => {
       console.log('acteur',response);
-      this.selectedActeur = response;
-      this.selectedIdActeur = this.selectedActeur.idActeur;
+      if(response){
+        this.selectedActeur = response;
+        this.selectedIdActeur = this.selectedActeur.idActeur;
+      }
+      
     },
     error => {
       console.log(error);
@@ -437,6 +442,16 @@ findPaysByCode(codePays){
       console.log(error);
     }
   );
+}
+
+
+getImageUrl(url: string){
+  if(url){
+    return this.uploadService.getLink(url);
+  }else{
+    return 'assets/img/gal1.jpg';
+  }
+  
 }
 
 

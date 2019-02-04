@@ -84,7 +84,8 @@ export class DefaultComponent implements OnInit {
   }
 
   initMap(){
-    this.dataMap = [
+    var tt= this; 
+    tt.dataMap = [
         ['ug', 0],
         ['ng', 0],
         ['st', 0],
@@ -144,7 +145,7 @@ export class DefaultComponent implements OnInit {
         ['cf', 0]
       ];
       this.paysSelected;
-       var tt= this;
+       
 
     this.chartMap = {
         chart: {
@@ -180,7 +181,7 @@ export class DefaultComponent implements OnInit {
             }
             },
             allAreas: false,
-            data: this.dataMap,
+            data: tt.dataMap,
             allowPointSelect: true,
             cursor: 'pointer'
           }
