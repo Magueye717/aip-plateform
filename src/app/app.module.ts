@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HighchartsChartModule } from 'highcharts-angular';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -15,7 +16,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './config/app.effects';
 import { EnteteComponent } from './ui/entete/entete.component';
 import { FooterComponent } from './ui/footer/footer.component';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -31,6 +31,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HighchartsChartModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -41,8 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   }),
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AppEffects]),
-    LeafletModule.forRoot()
+    EffectsModule.forRoot([AppEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

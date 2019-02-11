@@ -15,8 +15,7 @@ import { CreateProjetComponent } from './create-projet/create-projet.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FormsModule } from '@angular/forms';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { HighchartsChartModule } from 'highcharts-angular';
+import {AgmCoreModule} from '@agm/core';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -28,6 +27,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     FormsModule,
     NgSelectModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyCE0nvTeHBsiQIrbpMVTe489_O5mwyqofk'}),
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
@@ -39,8 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EffectsModule.forFeature([ProjetsEffects]),
     NgxSpinnerModule,
     NgMultiSelectDropDownModule.forRoot(),
-    LeafletModule,
-    HighchartsChartModule
+
   ],
   declarations: [
     DetailsProjetComponent,

@@ -20,23 +20,7 @@ import { SecteurService } from '../../../services/secteur.service';
 import { PaysService } from '../../../services/pays.service';
 import { UploadService } from '../../../services/upload.service';
 
-import * as Highcharts from 'highcharts/highstock';
-import Json from '*.json';
-const HC_map = require('highcharts/modules/map');
-const HC_exporting = require('highcharts/modules/exporting');
 
-HC_map(Highcharts);
-require('../../../config/geojson/africa')(Highcharts);
-
-HC_exporting(Highcharts);
-
-Highcharts.setOptions({
-  title: {
-    style: {
-      color: 'orange'
-    }
-  }
-});
 
 @Component({
   selector: 'app-liste-projet',
@@ -46,7 +30,7 @@ Highcharts.setOptions({
 export class ListeProjetComponent implements OnInit {
 
   projets: Projet[];
-  Highcharts = Highcharts;
+
   dataMap= [];
   chartMap: any;
   paysSelected: string = "";
@@ -76,6 +60,10 @@ export class ListeProjetComponent implements OnInit {
     annees: []
   };
 
+  latitude: number =  17.8124677;
+  longitude: number = 13.2379066;
+  zoomLevel = 4;
+
   constructor(
     private store: Store<State>,
     private route: ActivatedRoute,
@@ -88,8 +76,6 @@ export class ListeProjetComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.initMap();
 
     this.financementsList = [
       { id: 0, name: 'PTF' }
@@ -295,115 +281,7 @@ rechercher(){
       this.searchProjets(search);
 }
 
-initMap(){
-  this.dataMap = [
-      ['ug', 0],
-      ['ng', 0],
-      ['st', 0],
-      ['tz', 0],
-      ['sl', 0],
-      ['gw', 0],
-      ['cv', 0],
-      ['sc', 0],
-      ['tn', 0],
-      ['mg', 0],
-      ['ke', 0],
-      ['cd', 0],
-      ['fr', 0],
-      ['mr', 0],
-      ['dz', 0],
-      ['er', 0],
-      ['gq', 0],
-      ['mu', 0],
-      ['sn', 0],
-      ['km', 0],
-      ['et', 0],
-      ['ci', 0],
-      ['gh', 0],
-      ['zm', 0],
-      ['na', 0],
-      ['rw', 0],
-      ['sx', 0],
-      ['so', 0],
-      ['cm', 0],
-      ['cg', 0],
-      ['eh', 0],
-      ['bj', 0],
-      ['bf', 0],
-      ['tg', 0],
-      ['ne', 0],
-      ['ly', 0],
-      ['lr', 0],
-      ['mw', 0],
-      ['gm', 0],
-      ['td', 0],
-      ['ga', 0],
-      ['dj', 0],
-      ['bi', 0],
-      ['ao', 0],
-      ['gn', 0],
-      ['zw', 0],
-      ['za', 0],
-      ['mz', 0],
-      ['sz', 0],
-      ['ml', 0],
-      ['bw', 0],
-      ['sd', 0],
-      ['ma', 0],
-      ['eg', 0],
-      ['ls', 0],
-      ['ss', 0],
-      ['cf', 0]
-    ];
-    this.paysSelected;
-     var tt= this;
 
-  this.chartMap = {
-      chart: {
-        map: 'myMapName',
-        instance: {parent:this}
-      },
-      mapNavigation: {
-        enabled: false,
-        buttonOptions: {
-          alignTo: 'spacingBox'
-        }
-      },
-      colorAxis: {
-        min: 0
-      },
-      series: [
-        {
-          name: 'Random data',
-          states: {
-            hover: {
-              color: '#BADA55'
-            }
-          },
-          allAreas: false,
-          data: this.dataMap
-        }
-      ],
-      plotOptions: {
-        series: {
-            point: {
-                events: {
-                    click: function(e) {
-                      e.point.zoomTo();
-                        this.paysSelected = this.name;
-                        console.log("this", this);
-                        console.log('ttt', tt);
-                        tt.paysSelected = this.name;
-                        tt.selectedCodePays = this['hc-key'];
-                        tt.changePaysFromCarte();
-                      
-                      }
-                  }
-              }
-          }
-      },
-    };
-}
 
 changePaysFromCarte(){
   console.log('Pays', this.paysSelected, 'code', this.selectedCodePays);
@@ -437,6 +315,8 @@ findPaysByCode(codePays){
       this.paysList[0]=response;
       console.log('this.payslist', this.paysList);
       this.selectedIdPays = this.selectedPays.idPays;
+      this.latitude = this.selectedPays.lat;
+      this.longitude = this.selectedPays.lon;
     },
     error => {
       console.log(error);
