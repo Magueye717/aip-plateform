@@ -36,9 +36,28 @@
     <div class="col-md-6 p-0">
       <div id="map_container" >
         <agm-map    [latitude]="latitude" [longitude]="longitude" [zoom]="zoomLevel" [disableDefaultUI]="false" [zoomControl]="true">
-            <agm-marker *ngFor="let pays of paysList" [latitude]="pays.lat" [longitude]="pays.lon" (markerClick)="clickedMarker(pays)">
-              <agm-info-window><span class="text-c-blue">ALERTE </span>- SOS ALERTE</agm-info-window>
-            </agm-marker>
+            <agm-marker *ngFor="let pays of paysList" [latitude]="pays.lat" [longitude]="pays.lon" (markerClick)="clickedMarker(pays)"
+              [iconUrl]="'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'">
+                <agm-info-window >
+                  <div class="text-c-blue" style="width: 100%">
+                        <legend><strong>PAYS: {{pays.nomPays}} | LISTE DES PROJETS</strong></legend>
+                  <table border="1">
+                      <tr>
+                          <th class="th-carte">NUMERO PROJET</th>
+                          <th class="th-carte">NOM PROJET</th>
+                          <th class="th-carte">DETAILS</th>
+                      </tr>
+                    <tr *ngFor="let projet of projets" class="trcarte">
+                      <td>{{projet.numProjet}}</td>
+                      <td>{{projet.nomProjet}}</td>
+                      <td  style="text-align: center; cursor: pointer;">
+                          <a title="Détails" (click)="showDetailsProjet(projet)"><i  class="fa fa-eye text-info" ></i></a> 
+                       </td>
+                    </tr>
+                  </table>
+                </div>
+              </agm-info-window>
+              </agm-marker>
         </agm-map>
       </div>
     </div>
@@ -76,7 +95,7 @@
                   <div class="projet-image">
                     <img [src]="getImageUrl(projet.image)" alt="">
                     <div class="pays-date small-3">
-                      <span><i class="fa fa-map-marker"></i> Sénégal</span>
+                      <span *ngFor="let pays of projet.pays"><i class="fa fa-map-marker"></i> {{pays.nomPays}}</span>
                       <span class="date"><i class="fa fa-calendar"></i> {{projet.dateApprobation | date :
                         'dd/MM/yyyy'}}</span>
                     </div>

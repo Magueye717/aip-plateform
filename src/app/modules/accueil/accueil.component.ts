@@ -1,11 +1,14 @@
 declare var require: any;
 
+declare var google: any;
+
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { Router } from '@angular/router';
 import { ActeurFinancement } from '../../models/ActeurFinancement';
 import { PaysActeur } from '../../models/PaysActeur';
 import { Pays } from '../../models/Pays';
+import { Projet } from '../../models/projet';
 import { Secteur } from '../../models/Secteur';
 import { ActeurFavoris } from '../../dto/ActeurFavoris';
 import { SecteurFavoris } from '../../dto/SecteurFavoris';
@@ -13,6 +16,7 @@ import { SecteurFavoris } from '../../dto/SecteurFavoris';
 import { ActeurFinancementService } from '../../services/acteurfinancement.service';
 import { SecteurService } from '../../services/secteur.service';
 import { PaysService } from '../../services/pays.service';
+import { ProjetService } from '../../services/projet.service';
 
 
 @Component({
@@ -23,6 +27,7 @@ import { PaysService } from '../../services/pays.service';
 export class AccueilComponent implements OnInit {
 
   MyChart = [];
+  latlngBounds: any;
 
   mapChart: any;
   typeFinancement: string= "";
@@ -35,6 +40,7 @@ export class AccueilComponent implements OnInit {
   investisseursList : ActeurFinancement[];
   selectedActeur: ActeurFinancement;
   paysList : Pays[];
+  projetList : Projet[];
   selectedPays: Pays;
   selectedIdPays: number;
   selectedIdPaysActeur: number;
@@ -45,7 +51,7 @@ export class AccueilComponent implements OnInit {
   anneesList = [];
   latitude: number =  17.8124677;
   longitude: number = 13.2379066;
-  zoomLevel = 4;
+  zoomLevel = 5;
  
 
   objetRecherche = {
@@ -59,6 +65,7 @@ export class AccueilComponent implements OnInit {
   constructor(private acteurFinancementService: ActeurFinancementService,
          private secteurService: SecteurService,
          private paysService: PaysService,
+         private projetService: ProjetService,
          private router: Router) { }
 
   ngOnInit() {
@@ -85,8 +92,8 @@ export class AccueilComponent implements OnInit {
       response => {
         console.log('pays++',response);
         this.selectedPays = response;
-        this.paysList = new Array();
-        this.paysList=[this.selectedPays];
+        //this.paysList = new Array();
+        //this.paysList=[this.selectedPays];
         this.selectedIdPays = this.selectedPays.idPays;
         console.log('this.payslist', this.paysList);
         console.log('this.selectedPaysActeur', this.selectedIdPaysActeur);
@@ -127,14 +134,29 @@ export class AccueilComponent implements OnInit {
     );
   }
 
+
+  findProjetByCodePays(codePays: string){
+    this.projetService.findProjetByCodePays(codePays).subscribe(
+      response => {
+        console.log('list projet++',response);
+        this.projetList = response;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
   clickedMarker(pays: Pays) {
     console.log('clicked the marker:', pays);
-    //this.zoomLevel=5;
+    //this.zoomLevel=2;
     this.selectedCodePays= pays.codePays;
-    this.latitude = pays.lat;
-    this.longitude = pays.lon;
-    
+    //this.latlngBounds = new window['google'].maps.LatLngBounds();
+    //this.latlngBounds.extend(new window['google'].maps.LatLng(pays.lat, pays.lon));
+    //this.latitude = pays.lat;
+    //this.longitude = pays.lon;
     this.changePaysFromCarte();
+    this.findProjetByCodePays(pays.codePays);
   }
 
 
@@ -306,4 +328,7 @@ export class AccueilComponent implements OnInit {
         );
   }
 
+  showDetailsProjet(projet: Projet){
+    this.router.navigate(['projets/'+projet.idProjet]);
+  }
 }

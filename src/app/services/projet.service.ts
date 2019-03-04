@@ -71,4 +71,8 @@ export class ProjetService {
     return this.http.get<Projet[]>(`${environment.apiUrl}/ProjetService/api/projets/acteur/`+dto.idActeur+'/pays/'+dto.codePays+'/secteur/'+dto.idSecteur);
   }
 
+
+  findProjetByCodePays(codePays: string): Observable<Projet[]> {
+    return this.http.get<Projet[]>(`${environment.apiUrl}/ProjetService/api/projets/pays/`+codePays);
+  }
 }

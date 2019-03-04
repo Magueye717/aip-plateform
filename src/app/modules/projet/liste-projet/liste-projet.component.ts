@@ -3,6 +3,7 @@ declare var require: any;
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, } from 'rxjs';
+import { Router } from '@angular/router';
 import { Projet } from '../../../models/projet';
 import { ProjetService } from '../../../services/projet.service';
 import { SearchProjetDTO } from '../../../dto/SearchProjetDTO';
@@ -71,7 +72,8 @@ export class ListeProjetComponent implements OnInit {
     private acteurFinancementService: ActeurFinancementService,
     private secteurService: SecteurService,
     private paysService: PaysService,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private router: Router
   ) {
   }
 
@@ -141,6 +143,7 @@ export class ListeProjetComponent implements OnInit {
           console.log("GET ALL !!!!!");
           
           this.loadAllProjets();
+          this.loadPaysProjet();
          }
         
       });
@@ -171,6 +174,18 @@ export class ListeProjetComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  loadPaysProjet(){
+    this.paysService.findPaysProjet().subscribe(
+      response => {
+        console.log('list pays projet++',response);
+        this.paysList = response;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   loadActeursByType(type:string){
@@ -289,8 +304,8 @@ changePaysFromCarte(){
     response => {
       console.log('pays',response);
       this.selectedPays = response;
-      this.paysList = new Array();
-      this.paysList=[this.selectedPays];
+      //this.paysList = new Array();
+      //this.paysList=[this.selectedPays];
       this.selectedIdPays = this.selectedPays.idPays;
       console.log('this.payslist', this.paysList);
       this.selectedIdPays = this.selectedPays.idPays;
@@ -332,6 +347,31 @@ getImageUrl(url: string){
     return 'assets/img/gal1.jpg';
   }
   
+}
+findProjetByCodePays(codePays: string){
+  this.projetService.findProjetByCodePays(codePays).subscribe(
+    response => {
+      console.log('list projet++',response);
+      this.projets = response;
+    },
+    error => {
+      console.log(error);
+    }
+  );
+}
+
+clickedMarker(pays: Pays) {
+  console.log('clicked the marker:', pays);
+  //this.zoomLevel=5;
+  this.selectedCodePays= pays.codePays;
+  //this.latitude = pays.lat;
+  //this.longitude = pays.lon;
+  this.changePaysFromCarte();
+  this.findProjetByCodePays(pays.codePays);
+}
+
+showDetailsProjet(projet: Projet){
+  this.router.navigate(['projets/'+projet.idProjet]);
 }
 
 
