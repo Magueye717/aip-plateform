@@ -34,6 +34,14 @@ export class ActeurFinancementService {
     return this.http.get<ActeurFinancement[]>(this.apiUrl+'/type/'+type);
   }
 
+  findByPays(codePays: string): Observable<ActeurFinancement[]> {
+    return this.http.get<ActeurFinancement[]>(this.apiUrl+'/pays/'+codePays);
+  }
+
+  findBySecteur(idSecteur: number): Observable<ActeurFinancement[]> {
+    return this.http.get<ActeurFinancement[]>(this.apiUrl+'/secteur/'+idSecteur);
+  }
+
   findByIdActeur(idActeur: number): Observable<ActeurFinancement> {
     return this.http.get<ActeurFinancement>(this.apiUrl+'/'+idActeur);
   }

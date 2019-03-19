@@ -37,6 +37,10 @@ export class PaysService {
     return this.http.get<Pays[]>(this.apiUrl+'/acteur/'+idActeur);
   }
 
+  findBySecteur(idSecteur: number): Observable<Pays[]> {
+    return this.http.get<Pays[]>(this.apiUrl+'/secteur/'+idSecteur);
+  }
+
   findPaysProjet(): Observable<Pays[]> {
     return this.http.get<Pays[]>(this.apiUrl+'/paysprojet/');
   }

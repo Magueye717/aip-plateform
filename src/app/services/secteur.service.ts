@@ -30,7 +30,7 @@ export class SecteurService {
    * @param id l'identifiant de l'objet
    * @returns obtenir l'objet trouvé
    */
-  findByActeurAndPays(idActeur: number, codePays: string): Observable<Secteur[]> {
+  findByActeurAndPays(idActeur: string, codePays: string): Observable<Secteur[]> {
     return this.http.get<Secteur[]>(this.apiUrl+'/acteur/'+idActeur+'/pays/'+codePays);
   }
 

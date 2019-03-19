@@ -201,7 +201,7 @@ export class ListeProjetComponent implements OnInit {
       );
 }
 
-  loadSecteurByActeurAndPays(idActeur: number, codePays: string){
+  loadSecteurByActeurAndPays(idActeur: string, codePays: string){
     this.secteurService.findByActeurAndPays(idActeur, codePays).subscribe(
         response => {
           console.log('secteurs',response);
@@ -264,7 +264,7 @@ filtrePays(value: any): void {
   console.log('Pays', this.selectedPays);
   console.log('selectedPaysActeur',this.selectedIdPaysActeur);
  
-  this.loadSecteurByActeurAndPays(this.selectedActeur.idActeur, this.selectedPays.codePays);
+  this.loadSecteurByActeurAndPays(''+this.selectedActeur.idActeur, this.selectedPays.codePays);
 }
 
 filtreSecteur(value: any): void {
@@ -312,7 +312,7 @@ changePaysFromCarte(){
       console.log('this.selectedPaysActeur', this.selectedIdPaysActeur);
       console.log('this.selectedActeur', this.selectedActeur);
       console.log('this.selectedPays', this.selectedPays);
-      var idActeur = 0;
+      var idActeur = '0';
       this.loadSecteurByActeurAndPays(idActeur, this.selectedPays.codePays);
     },
     error => {

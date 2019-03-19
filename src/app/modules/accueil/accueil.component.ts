@@ -18,6 +18,11 @@ import { SecteurService } from '../../services/secteur.service';
 import { PaysService } from '../../services/pays.service';
 import { ProjetService } from '../../services/projet.service';
 
+import myGeoJSON from '../../config/geojson/africa.geo.json';
+
+import * as L from 'leaflet';
+import { inspect } from 'util';
+
 
 @Component({
   selector: 'app-accueil',
@@ -31,7 +36,6 @@ export class AccueilComponent implements OnInit {
 
   mapChart: any;
   typeFinancement: string= "";
-  mapInstance: any;
   chartMap: any;
   dataMap= [];
   paysSelected: string = "";
@@ -52,7 +56,10 @@ export class AccueilComponent implements OnInit {
   latitude: number =  17.8124677;
   longitude: number = 13.2379066;
   zoomLevel = 5;
- 
+  GEOJSON: any;
+  myfrugalmap: any;
+  isSelection: boolean = false;
+  selectedMarker: any;
 
   objetRecherche = {
     typesfinancement: [],
@@ -71,11 +78,106 @@ export class AccueilComponent implements OnInit {
   ngOnInit() {
     this.initListSearching();
     //this.initChart();
-  
+    this.loadAllSecteurs();
+    this.loadAllInvestisseurs();
     this.loadInvestisseursFavoris("vide");
     this.loadSecteurFavoris();
     this.loadPaysProjet();
+    this.initLeafLet();
+    console.log('myGeoJSON',myGeoJSON);
+    
+ 
   }
+
+  initLeafLet(){
+    
+  var instance = this;
+  this.myfrugalmap = L.map('map_container').setView([5.9248723, 7.9259507], 4);
+
+   
+ 
+  //L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: 'Frugal Map'
+    }).addTo(this.myfrugalmap);
+
+    var info = L.Control;
+    ////////
+   
+    this.GEOJSON = L.geoJSON(myGeoJSON, {
+      style: function(feature){
+        var fillColor,
+            density = feature.properties.density;
+        if ( density > 80 ) fillColor = "#006837";
+        else if ( density > 40 ) fillColor = "#31a354";
+        else if ( density > 20 ) fillColor = "#78c679";
+        else if ( density > 10 ) fillColor = "#c2e699";
+        else if ( density > 0 ) fillColor = "#ffffcc";
+        else fillColor = "#f7f7f7";  // no data
+        return { color: "#999", weight: 2, fillColor: fillColor, fillOpacity: .6, dashArray: '3' };
+      },
+      onEachFeature: function( feature, layer ){
+        //layer.bindPopup( "<strong>" + feature.properties['brk_name'] + "</strong><br/>" + feature.properties.density + " rats per square mile" );        
+          layer.on('mouseover', (e) => instance.highlightFeature(e));
+          layer.on('mouseout', (e) => instance.clearHighLight(e));
+        
+        layer.on('mousedown', (e) => instance.clickOnMap(e.target));
+        
+      }
+    }).addTo(this.myfrugalmap);
+
+    this.myfrugalmap.fitBounds(this.GEOJSON.getBounds());
+  }
+
+  
+
+  
+
+  highlightFeature(e) {
+    
+    if(!this.isSelection){
+      var layer = e.target;
+      layer.setStyle({
+        weight: 5,
+        color: '#666',
+        fillColor: '#006837',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+    }
+    
+}
+
+clearHighLight(e){
+  if(!this.isSelection){
+    this.GEOJSON.resetStyle(e.target);
+  }
+}
+
+clickOnMap(e){
+  this.myfrugalmap.fitBounds(e.getBounds());
+  this.isSelection = true;
+  if(this.selectedMarker){
+    this.GEOJSON.resetStyle(this.selectedMarker);
+  }
+  this.selectedMarker = e;
+
+    e.setStyle({
+        weight: 5,
+        color: 'red',
+        fillColor: '#006837',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+  this.selectedCodePays = e.feature.properties.postal;
+  console.log('codePostal', this.selectedCodePays);
+  this.changePaysFromCarte();
+}
 
 
   mapLoadedEvent(status: boolean) {
@@ -99,8 +201,8 @@ export class AccueilComponent implements OnInit {
         console.log('this.selectedPaysActeur', this.selectedIdPaysActeur);
         console.log('this.selectedActeur', this.selectedActeur);
         console.log('this.selectedPays', this.selectedPays);
-        var idActeur = 0;
-        this.loadSecteurByActeurAndPays(idActeur, this.selectedPays.codePays);
+        var idActeur = '0';
+        this.loadSecteurByActeurPays(idActeur, this.selectedPays.codePays);
         this.loadInvestisseursFavoris(this.selectedPays.codePays);
       },
       error => {
@@ -124,6 +226,19 @@ export class AccueilComponent implements OnInit {
 
   loadPaysProjet(){
     this.paysService.findPaysProjet().subscribe(
+      response => {
+        console.log('list pays projet++',response);
+        this.paysList = response;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+
+  loadPaysBySecteur(idSecteur: number){
+    this.paysService.findBySecteur(idSecteur).subscribe(
       response => {
         console.log('list pays projet++',response);
         this.paysList = response;
@@ -245,7 +360,33 @@ export class AccueilComponent implements OnInit {
           );
     }
 
-    loadSecteurByActeurAndPays(idActeur: number, codePays: string){
+    loadActeursByCodePays(codePays:string){
+      this.acteurFinancementService.findByPays(codePays).subscribe(
+          response => {
+            console.log('acteurs',response);
+            this.investisseursList = response;
+            
+          },
+          error => {
+            console.log(error);
+          }
+        );
+  }
+
+  loadActeursBySecteur(idSecteur:number){
+    this.acteurFinancementService.findBySecteur(idSecteur).subscribe(
+        response => {
+          console.log('acteurs',response);
+          this.investisseursList = response;
+          
+        },
+        error => {
+          console.log(error);
+        }
+      );
+}
+
+    loadSecteurByActeurPays(idActeur: string, codePays: string){
         this.secteurService.findByActeurAndPays(idActeur, codePays).subscribe(
             response => {
               console.log('secteurs',response);
@@ -279,17 +420,24 @@ export class AccueilComponent implements OnInit {
         console.log('Acteur', this.selectedActeur);
         console.log('Pays', this.selectedPays);
         console.log('selectedPaysActeur',this.selectedIdPaysActeur);
-        console.log('map : ',this.mapInstance);
-        var point = this.mapInstance.pointer.chart.get('sn');
+        //console.log('map : ',this.mapInstance);
+        //var point = this.mapInstance.pointer.chart.get('sn');
     
-        console.log('point', point);
-       
-        this.loadSecteurByActeurAndPays(this.selectedActeur.idActeur, this.selectedPays.codePays);
+        //console.log('point', point);
+       var idActeur='0';
+       if(this.selectedActeur){
+        idActeur = ''+this.selectedActeur.idActeur;
+       }
+        this.loadSecteurByActeurPays(idActeur, this.selectedPays.codePays);
+        this.loadActeursByCodePays(this.selectedPays.codePays);
+        
       }
 
       filtreSecteur(value: any): void {
         console.log('secteur',value);
         this.selectedSecteur = value;
+        this.loadActeursBySecteur(this.selectedSecteur.idSecteur);
+        this.loadPaysBySecteur(this.selectedSecteur.idSecteur);
       }
 
 
@@ -306,6 +454,20 @@ export class AccueilComponent implements OnInit {
             }
           );
     }
+
+    loadAllSecteurs(){
+      this.secteurService.listAll().subscribe(
+          response => {
+            console.log('All Secteurs ',response);
+            this.secteursList = response;
+            //this.investisseursList = response;
+            
+          },
+          error => {
+            console.log(error);
+          }
+        );
+  }
 
 
     loadInvestisseursFavoris(codePays: string){
@@ -327,6 +489,19 @@ export class AccueilComponent implements OnInit {
           }
         );
   }
+
+
+  loadAllInvestisseurs(){
+    this.acteurFinancementService.listAll().subscribe(
+        response => {
+          console.log('All investisseurs',response);
+          this.investisseursList = response;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+}
 
   showDetailsProjet(projet: Projet){
     this.router.navigate(['projets/'+projet.idProjet]);
