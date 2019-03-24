@@ -22,6 +22,8 @@ import myGeoJSON from '../../config/geojson/africa.geo.json';
 
 import * as L from 'leaflet';
 import { inspect } from 'util';
+import { concat } from 'rxjs/internal/operators/concat';
+import { Map } from 'mapbox-gl';
 
 
 @Component({
@@ -58,8 +60,11 @@ export class AccueilComponent implements OnInit {
   zoomLevel = 5;
   GEOJSON: any;
   myfrugalmap: any;
+  selectedElement: any;
   isSelection: boolean = false;
   selectedMarker: any;
+  geoJSONSelected: any;
+  mapFeatures: any;
 
   objetRecherche = {
     typesfinancement: [],
@@ -103,7 +108,7 @@ export class AccueilComponent implements OnInit {
 
     var info = L.Control;
     ////////
-   
+   this.mapFeatures = {};
     this.GEOJSON = L.geoJSON(myGeoJSON, {
       style: function(feature){
         var fillColor,
@@ -116,22 +121,61 @@ export class AccueilComponent implements OnInit {
         else fillColor = "#f7f7f7";  // no data
         return { color: "#999", weight: 2, fillColor: fillColor, fillOpacity: .6, dashArray: '3' };
       },
-      onEachFeature: function( feature, layer ){
+      onEachFeature: function( feature, layer){
+        console.log('feat', feature, 'layer', layer);
+        instance.mapFeatures[feature.properties['iso_a2']]= {layer: layer, feature: feature};
         //layer.bindPopup( "<strong>" + feature.properties['brk_name'] + "</strong><br/>" + feature.properties.density + " rats per square mile" );        
           layer.on('mouseover', (e) => instance.highlightFeature(e));
           layer.on('mouseout', (e) => instance.clearHighLight(e));
-        
-        layer.on('mousedown', (e) => instance.clickOnMap(e.target));
-        
+          layer.on('mousedown', (e) => instance.clickOnMap(e.target));
       }
     }).addTo(this.myfrugalmap);
+
+    console.log('geoJSON', this.GEOJSON);
 
     this.myfrugalmap.fitBounds(this.GEOJSON.getBounds());
   }
 
   
-
+fitBoundsSelectedCountry(codeIso2Pays:string){
+  console.log('zgrgetagttt');
+  this.geoJSONSelected= {};
+  var features = [];
+/*good
+myGeoJSON.features.forEach(element => {
+  if(element.properties['iso_a2'] === codeIso2Pays){
+    console.log('elem',element, element.properties['iso_a2']);
+    features.push(element);
+    this.geoJSONSelected.type='FeatureCollection';
+    this.geoJSONSelected.features = features;
+    this.geoJSONSelected.options = {
+      color: "red"
+    }
+    let tempGeJSON  = L.geoJSON(this.geoJSONSelected).addTo(this.myfrugalmap);;
+    
+  this.myfrugalmap.fitBounds(tempGeJSON.getBounds());
+  }
   
+});
+*/
+
+//console.log('***',this.GEOJSON['_layers']);
+if(this.selectedElement){
+  this.selectedElement.layer.setStyle({
+    weight: 5,
+    color: 'red',
+    fillColor: '#006837',
+    dashArray: '',
+    fillOpacity: 0.7
+}); 
+}
+this.selectedElement = this.mapFeatures[codeIso2Pays];
+console.log('selectedFeature++++ ',this.selectedElement);
+//selectedElement.layer.options.color ="red";
+this.selectedElement.layer.setStyle({fillColor :'red'}) 
+this.myfrugalmap.fitBounds(this.selectedElement.layer.getBounds());
+
+}
 
   highlightFeature(e) {
     
@@ -159,6 +203,7 @@ clearHighLight(e){
 }
 
 clickOnMap(e){
+  console.log("eeeeeeeeeeeeeee",e);
   this.myfrugalmap.fitBounds(e.getBounds());
   this.isSelection = true;
   if(this.selectedMarker){
@@ -204,6 +249,7 @@ clickOnMap(e){
         var idActeur = '0';
         this.loadSecteurByActeurPays(idActeur, this.selectedPays.codePays);
         this.loadInvestisseursFavoris(this.selectedPays.codePays);
+        this.loadActeursByCodePays(this.selectedPays.codePays);
       },
       error => {
         console.log(error);
@@ -415,8 +461,10 @@ clickOnMap(e){
       }
     
       filtrePays(value: any): void {
-        console.log('pays',value);
+        
+        console.log('pays+++',value);
         this.selectedPays = value;
+        this.fitBoundsSelectedCountry(this.selectedPays.codePays);
         console.log('Acteur', this.selectedActeur);
         console.log('Pays', this.selectedPays);
         console.log('selectedPaysActeur',this.selectedIdPaysActeur);
