@@ -522,7 +522,10 @@ fitBoundsSelectedCountry(codeIso2Pays:string){
   console.log('zgrgetagttt');
   this.geoJSONSelected= {};
   var features = [];
-
+  this.selectedElement = this.mapFeatures[codeIso2Pays];
+console.log('selectedFeature++++ ',this.selectedElement);
+this.clickOnMap(this.selectedElement.layer);
+/*
 if(this.selectedElement){
   this.selectedElement.layer.setStyle({
     weight: 5,
@@ -537,7 +540,7 @@ console.log('selectedFeature++++ ',this.selectedElement);
 //selectedElement.layer.options.color ="red";
 this.selectedElement.layer.setStyle({fillColor :'red'}) 
 this.myfrugalmap.fitBounds(this.selectedElement.layer.getBounds());
-
+*/
 }
 
 loadAllInvestisseurs(){

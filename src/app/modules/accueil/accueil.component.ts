@@ -160,7 +160,7 @@ myGeoJSON.features.forEach(element => {
 */
 
 //console.log('***',this.GEOJSON['_layers']);
-if(this.selectedElement){
+/*if(this.selectedElement){
   this.selectedElement.layer.setStyle({
     weight: 5,
     color: 'red',
@@ -168,12 +168,13 @@ if(this.selectedElement){
     dashArray: '',
     fillOpacity: 0.7
 }); 
-}
+}*/
 this.selectedElement = this.mapFeatures[codeIso2Pays];
 console.log('selectedFeature++++ ',this.selectedElement);
+this.clickOnMap(this.selectedElement.layer);
 //selectedElement.layer.options.color ="red";
-this.selectedElement.layer.setStyle({fillColor :'red'}) 
-this.myfrugalmap.fitBounds(this.selectedElement.layer.getBounds());
+//this.selectedElement.layer.setStyle({fillColor :'red'}) 
+//this.myfrugalmap.fitBounds(this.selectedElement.layer.getBounds());
 
 }
 
@@ -464,6 +465,7 @@ clickOnMap(e){
         
         console.log('pays+++',value);
         this.selectedPays = value;
+        this.isSelection = true;
         this.fitBoundsSelectedCountry(this.selectedPays.codePays);
         console.log('Acteur', this.selectedActeur);
         console.log('Pays', this.selectedPays);
