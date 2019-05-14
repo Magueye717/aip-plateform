@@ -44,7 +44,7 @@ export class UploadService {
 
   getLink(fileName: string){
     let urlImgage = `${environment.apiUrlMedia}/images/`+fileName;
-    console.log("urlmage", urlImgage);
+    //console.log("urlmage", urlImgage);
     return urlImgage;
   }
 }

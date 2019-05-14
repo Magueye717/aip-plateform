@@ -23,8 +23,9 @@ export class DetailsProjetComponent implements OnInit {
       code: 'sn'
     }
   };
+  projetSelected: Projet;
 
-  projetSelected: Projet = {
+ /* projetSelected: Projet = {
     idProjet: 0,
     numProjet: '',
     contrePartieEtat: 0,
@@ -51,7 +52,7 @@ export class DetailsProjetComponent implements OnInit {
     indicateurs: [],
     documents: [],
     financements: []
-  };
+  };*/
 
   drapeau: any;
   isImageLoading = false;
@@ -64,6 +65,7 @@ export class DetailsProjetComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.store.dispatch(new GetProjet(+params['id']));
     });
+    this.projetSelected = new Projet();
 
     this.store.select(getProjet).subscribe((projet) => {
       if (projet !== null) {
@@ -80,7 +82,7 @@ export class DetailsProjetComponent implements OnInit {
   }
 
   initialize() {
-    this.projetSelected = {
+    /*this.projetSelected = {
       idProjet: 0,
       numProjet: '',
       contrePartieEtat: 0,
@@ -107,7 +109,7 @@ export class DetailsProjetComponent implements OnInit {
       indicateurs: [],
       documents: [],
       financements: []
-    };
+    };*/
   }
 
 

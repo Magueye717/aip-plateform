@@ -1,4 +1,4 @@
-export interface Projet {
+export class Projet {
     idProjet?: number;
     numProjet?: string;
     contrePartieEtat?: number;
@@ -25,6 +25,36 @@ export interface Projet {
     indicateurs?: any[];
     documents?: any[];
     financements?: any[];
+    image: string;
+    constructor(values: Object = {}) {
+        Object.assign(this, values);
+        this.idProjet =0;
+        this.numProjet= '';
+      this.contrePartieEtat= 0;
+      this.dateApprobation= null;
+      this.dateCloturePrev= null;
+      this.dateClotureEff= null;
+      this.budjetProjet= 0;
+      this.nomProjet= '';
+      this.statut= '';
+      this.acteurFinance= '';
+      this.descriptionProjet= '';
+      this.coordonnateurProjet= '';
+      this.categorieEnv= '';
+      this.objectifGeneral= '';
+      this.objectifSpecs= [];
+      this.ciblesProjets= [];
+      this.infosAdds= [];
+      this.contacts= [];
+      this.experts= [];
+      this.pays= [];
+      this.composantes= [];
+      this.secteurs= [];
+      this.structureResps ='';
+      this.indicateurs=[];
+      this.documents=[];
+      this.financements= [];
+    }
 }
 
 interface Pays {

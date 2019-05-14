@@ -75,4 +75,12 @@ export class ProjetService {
   findProjetByCodePays(codePays: string): Observable<Projet[]> {
     return this.http.get<Projet[]>(`${environment.apiUrl}/ProjetService/api/projets/pays/`+codePays);
   }
+
+  /**
+   * liste des projets publiés
+   */
+  listPublicProjet(): Observable<Projet[]> {
+    return this.http.get<Projet[]>(`${environment.apiUrl}/ProjetService/api/projets/publies`);
+  }
+
 }

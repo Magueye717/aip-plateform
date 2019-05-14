@@ -24,6 +24,7 @@ import { UploadService } from '../../../services/upload.service';
 import myGeoJSON from '../../../config/geojson/africa.geo.json';
 
 import * as L from 'leaflet';
+import { concat } from 'rxjs/internal/observable/concat';
 
 
 
@@ -35,6 +36,7 @@ import * as L from 'leaflet';
 export class ListeProjetComponent implements OnInit {
 
   projets: Projet[];
+  totalProjet: number;
 
   dataMap= [];
   chartMap: any;
@@ -153,7 +155,7 @@ export class ListeProjetComponent implements OnInit {
           return { color: "#999", weight: 2, fillColor: fillColor, fillOpacity: .6, dashArray: '3' };
         },
         onEachFeature: function( feature, layer){
-          console.log('feat', feature, 'layer', layer);
+          //console.log('feat', feature, 'layer', layer);
           instance.mapFeatures[feature.properties['iso_a2']]= {layer: layer, feature: feature};
           //layer.bindPopup( "<strong>" + feature.properties['brk_name'] + "</strong><br/>" + feature.properties.density + " rats per square mile" );        
             layer.on('mouseover', (e) => instance.highlightFeature(e));
@@ -270,10 +272,12 @@ export class ListeProjetComponent implements OnInit {
 
 
   loadAllProjets(){
-    this.projetService.listAll().subscribe(
+    this.projetService.listPublicProjet().subscribe(
         response => {
           console.log('ALL projets',response);
           this.projets = response;
+          this.totalProjet = this.projets.length;
+          console.log('totalProjet', this.totalProjet);
           
         },
         error => {
