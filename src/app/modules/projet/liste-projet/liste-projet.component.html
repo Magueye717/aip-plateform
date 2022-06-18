@@ -79,7 +79,7 @@
                   </div>
                   <div class="projet-details">
                     <h4 class="projet-title">
-                      <a routerLink="/projets/{{projet.idProjet}}" routerLinkActive="active">
+                      <a routerLink="/projets/{{projet.idProjet}}" routerLinkActive="active" (click)="refresh()">
                         {{projet.nomProjet}}
                       </a>
                     </h4>

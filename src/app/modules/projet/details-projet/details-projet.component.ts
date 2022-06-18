@@ -122,4 +122,8 @@ export class DetailsProjetComponent implements OnInit {
     
   }
 
+  refresh(): void {
+    window.location.reload();
+   }
+
 }
